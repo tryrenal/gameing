@@ -1,2 +1,4 @@
+include 'features:creator'
+include 'features:home'
 include ':app'
 rootProject.name = "Gameing"
