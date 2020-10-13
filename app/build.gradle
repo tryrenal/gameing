@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../shared_depedencies.gradle'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -26,16 +27,10 @@ android {
 }
 
 dependencies {
-    implementation project(":core")
-    implementation project(":common")
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    api "androidx.core:core-ktx:$core_ktx_version"
-    api "androidx.appcompat:appcompat:$appcompat_version"
-    api "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    //noinspection GradleDependency
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test.ext:junit:$junit_test_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
 
+    implementation project(Modules.creator)
+    implementation project(Modules.home)
+    implementation project(Modules.common)
+    implementation project(Modules.core)
 }
