@@ -1,5 +1,5 @@
 object ApplicationId {
-    val id = "com.redveloper.gameing"
+    const val id = "com.redveloper.gameing"
 }
 
 object Modules {

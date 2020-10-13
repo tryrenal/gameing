@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../../shared_depedencies.gradle'
 apply from: '../../android_commons.gradle'
+apply from: '../../android_presentation.gradle'
 
 android {
     defaultConfig {

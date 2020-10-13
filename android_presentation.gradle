@@ -1,0 +1,5 @@
+dependencies {
+    implementation AndroidLibraries.recyclerview
+    implementation AndroidLibraries.cardview
+
+}

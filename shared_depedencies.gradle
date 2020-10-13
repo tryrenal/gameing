@@ -14,5 +14,6 @@ dependencies {
     implementation Libraries.koinAndroid
     implementation Libraries.koinCore
     implementation Libraries.koinViewModel
-
+    //multidex
+    implementation AndroidLibraries.multidex
 }

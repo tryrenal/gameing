@@ -18,5 +18,17 @@ android {
 }
 
 dependencies {
-
+    //room
+    implementation Libraries.room
+    implementation Libraries.roomCompiler
+    implementation Libraries.roomKtx
+    implementation Libraries.roomTesting
+    //retrofit
+    implementation Libraries.retrofit
+    implementation Libraries.converterGson
+    implementation Libraries.okhttp
+    //coroutines
+    implementation Libraries.coroutinesCore
+    implementation Libraries.coroutinesAndroid
+    api AndroidLibraries.lifecycle
 }
