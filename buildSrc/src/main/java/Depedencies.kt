@@ -1,5 +1,5 @@
 object ApplicationId {
-    val id = "com.themovies.sample"
+    val id = "com.redveloper.gameing"
 }
 
 object Modules {
@@ -20,6 +20,7 @@ object Versions {
     val compileSdk = 30
     val minSdk = 21
     val targetSdk = 30
+    val buildTools = "30.0.2"
     val kotlin = "1.4.10"
     val coreKtx = "1.3.2"
     val appCompat = "1.2.0"

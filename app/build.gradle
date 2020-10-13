@@ -2,32 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../shared_depedencies.gradle'
+apply from: '../android_commons.gradle'
 
 android {
-    compileSdkVersion compile_sdk_version
-    //noinspection GradleDependency
-    buildToolsVersion "$buildToolsVersion"
-
     defaultConfig {
-        applicationId "com.redveloper.gameing"
-        minSdkVersion min_sdk_version
-        targetSdkVersion compile_sdk_version
-        versionCode version_code
-        versionName "$version_name"
-
+        applicationId ApplicationId.id
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(Modules.creator)
     implementation project(Modules.home)
