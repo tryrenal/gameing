@@ -1,4 +1,4 @@
-package com.redveloper.core.network.game
+package com.redveloper.core.data.source.remote.response.game
 
 import com.google.gson.annotations.SerializedName
 
