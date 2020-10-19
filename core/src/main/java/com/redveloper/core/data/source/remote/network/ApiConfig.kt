@@ -1,5 +1,6 @@
 package com.redveloper.core.data.source.remote.network
 
+import com.redveloper.core.utils.baseUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val baseUrl = "https://api.rawg.io/api/"
 
     private fun provideOkHttpClient() : OkHttpClient {
         return OkHttpClient.Builder()
