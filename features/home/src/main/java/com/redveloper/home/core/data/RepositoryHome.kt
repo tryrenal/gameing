@@ -9,7 +9,9 @@ import com.redveloper.core.utils.AppExecutors
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.core.domain.model.Game
 import com.redveloper.home.core.domain.repository.RepositoryHomeImpl
+import com.redveloper.home.core.utils.GameMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class RepositoryHome (
     private val remoteDataSource: RemoteDataSource,
@@ -20,7 +22,8 @@ class RepositoryHome (
     override fun getAllGames(): Flow<Resource<List<Game>>> {
         return object : NetworkBoundResource<List<Game>, List<GameResponse>>(){
             override fun loadFromDB(): Flow<List<Game>> {
-                TODO("Not yet implemented")
+                return localDataSource.getAllGame()
+                    .map { GameMapper.entityToDomain(it) }
             }
 
             override fun shouldFetch(data: List<Game>?): Boolean {
@@ -32,7 +35,8 @@ class RepositoryHome (
             }
 
             override suspend fun saveCallResult(data: List<GameResponse>) {
-                TODO("Not yet implemented")
+                val gameEntity = GameMapper.responseToEntity(data)
+                localDataSource.insertGame(gameEntity)
             }
         }.asFlow()
     }
