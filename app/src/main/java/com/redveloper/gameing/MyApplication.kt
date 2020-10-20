@@ -3,9 +3,9 @@ package com.redveloper.gameing
 import android.app.Application
 import com.redveloper.core.di.databaseModule
 import com.redveloper.core.di.networkModule
-import com.redveloper.home.di.repositoryHome
-import com.redveloper.home.di.useCaseModule
-import com.redveloper.home.di.viewModelModule
+import com.redveloper.gameing.di.repository
+import com.redveloper.gameing.di.useCaseModule
+import com.redveloper.gameing.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +21,7 @@ class MyApplication : Application(){
                 listOf(
                     databaseModule,
                     networkModule,
-                    repositoryHome,
+                    repository,
                     useCaseModule,
                     viewModelModule
                 )

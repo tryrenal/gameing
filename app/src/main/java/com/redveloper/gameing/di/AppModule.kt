@@ -1,4 +1,4 @@
-package com.redveloper.home.di
+package com.redveloper.gameing.di
 
 import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.remote.RemoteDataSource
@@ -11,8 +11,8 @@ import com.redveloper.home.ui.HomeViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val repositoryHome = module {
-    single { LocalDataSource(get()) }
+val repository = module {
+    single { LocalDataSource(get(), get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
     single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get()) }
