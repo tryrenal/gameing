@@ -18,5 +18,5 @@ data class CreatorEntity(
     @ColumnInfo(name = "imageBackground")
     val imageBackgroudn: String?,
     @ColumnInfo(name = "gamesCount")
-    val gamesCount: String?
+    val gamesCount: Int?
 )

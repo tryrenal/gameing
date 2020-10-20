@@ -3,6 +3,7 @@ package com.redveloper.gameing
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.redveloper.creator.ui.CreatorFragment
 import com.redveloper.home.ui.HomeFragment
 
 class MainActivity : AppCompatActivity() {
@@ -10,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        moveTofragment(HomeFragment())
+        moveTofragment(CreatorFragment())
     }
 
     fun moveTofragment(fragment: Fragment) {

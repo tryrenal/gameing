@@ -1,0 +1,12 @@
+package com.redveloper.creator.core.domain.usecase
+
+import com.redveloper.core.vo.Resource
+import com.redveloper.creator.core.domain.model.Creator
+import com.redveloper.creator.core.domain.repository.RepositoryCreatorImpl
+import kotlinx.coroutines.flow.Flow
+
+class CreatorInteractor (
+    private val repositoryCreatorImpl: RepositoryCreatorImpl
+) : CreatorUseCase {
+    override fun getAllCreator(): Flow<Resource<List<Creator>>> = repositoryCreatorImpl.getAllCreator()
+}

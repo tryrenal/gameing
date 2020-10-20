@@ -2,12 +2,13 @@ package com.redveloper.core.data.source.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.redveloper.core.data.source.local.entity.CreatorEntity
 import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.room.dao.CreatorDao
 import com.redveloper.core.data.source.local.room.dao.GameDao
 
 @Database(
-    entities = [GameEntity::class],
+    entities = [GameEntity::class, CreatorEntity::class],
     version = 1,
     exportSchema = false
 )
