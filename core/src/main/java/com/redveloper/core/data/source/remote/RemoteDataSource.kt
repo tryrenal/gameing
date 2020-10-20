@@ -1,6 +1,7 @@
 package com.redveloper.core.data.source.remote
 
 import com.redveloper.core.data.source.remote.network.ApiService
+import com.redveloper.core.data.source.remote.response.creator.CreatorResponse
 import com.redveloper.core.data.source.remote.response.game.GameResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,4 +26,20 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+
+    fun getAllCreator(): Flow<ApiResponse<List<CreatorResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getAllCreator()
+                val dataArray = response.results
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(response.results))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            }catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }
