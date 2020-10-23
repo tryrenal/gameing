@@ -16,4 +16,7 @@ dependencies {
     implementation Libraries.koinViewModel
     //multidex
     implementation AndroidLibraries.multidex
+    //navigation
+    api Libraries.navigationFragment
+    api Libraries.navigationKtx
 }

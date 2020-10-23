@@ -40,6 +40,7 @@ object Versions {
     val coroutines = "1.3.9"
     val loggingInterceptor = "4.9.0"
     val lifecycle = "2.2.0"
+    val navigation = "2.3.0"
 }
 
 object Libraries {
@@ -61,6 +62,9 @@ object Libraries {
     //coroutines
     val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    //navigation
+    val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    val navigationKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 }
 
 object KotlinLibraries {
