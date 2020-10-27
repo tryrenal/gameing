@@ -41,6 +41,7 @@ object Versions {
     val loggingInterceptor = "4.9.0"
     val lifecycle = "2.2.0"
     val navigation = "2.3.0"
+    val pagedList = "2.1.2"
 }
 
 object Libraries {
@@ -65,6 +66,7 @@ object Libraries {
     //navigation
     val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val navigationKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+    val pagedList = "androidx.paging:paging-runtime:${Versions.pagedList}"
 }
 
 object KotlinLibraries {
