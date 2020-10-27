@@ -2,18 +2,21 @@ package com.redveloper.home.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
+import com.redveloper.home.core.domain.model.Game
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     val homeViewModel: HomeViewModel by viewModel()
+    private lateinit var homeAdapter: HomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,15 +28,15 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (activity != null){
-            homeViewModel.games().observe(viewLifecycleOwner, Observer { data ->
-                if (data != null){
-                    when(data) {
+        if (activity != null) {
+            homeViewModel.games().observe(viewLifecycleOwner, { data ->
+                if (data != null) {
+                    when (data) {
                         is Resource.Loading -> {
 
                         }
                         is Resource.Success -> {
-                            Log.i("dataGame", data.data.toString())
+                            data.data?.let { showDataGame(it) }
                         }
                         is Resource.Error -> {
                             Log.i("dataGame", data.message.toString())
@@ -41,6 +44,14 @@ class HomeFragment : Fragment() {
                     }
                 }
             })
+        }
+    }
+
+    private fun showDataGame(data: List<Game>) {
+        homeAdapter = HomeAdapter(data)
+        with(rv_game) {
+            adapter = homeAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 }

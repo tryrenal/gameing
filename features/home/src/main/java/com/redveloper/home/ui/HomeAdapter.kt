@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.redveloper.home.R
 import com.redveloper.home.core.domain.model.Game
+import kotlinx.android.synthetic.main.layout_item_home.view.*
 
 class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.ViewHolder>(){
 
-    private lateinit var items: ArrayList<Game>
+    private var items: ArrayList<Game> = ArrayList()
 
-    fun setData(data: List<Game>){
+    constructor(data: List<Game>) : this(){
         this.items.addAll(data)
     }
 
@@ -29,7 +31,12 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.ViewHolder>(){
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bindData(data: Game){
-
+            with(itemView){
+                Glide.with(this)
+                    .load(data.backgroundImage)
+                    .into(img_item_home)
+                tv_title_item_home.text = data.name
+            }
         }
     }
 }
