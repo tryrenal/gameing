@@ -23,4 +23,5 @@ dependencies {
     implementation project(Modules.common)
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(Modules.core)
+    implementation Libraries.glide
 }
