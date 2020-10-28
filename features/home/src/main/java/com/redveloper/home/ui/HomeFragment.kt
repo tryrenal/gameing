@@ -14,6 +14,7 @@ import com.redveloper.home.core.domain.model.Game
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -38,11 +39,11 @@ class HomeFragment : Fragment() {
 
                         }
                         is Resource.Success -> {
-                            Log.i("dataGame", data.data.toString())
+                            Timber.i(data.data.toString())
                             data.data?.let { showDataGame(it) }
                         }
                         is Resource.Error -> {
-                            Log.i("dataGame", data.message.toString())
+                            Timber.e(data.message)
                         }
                     }
                 }
