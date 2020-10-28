@@ -1,5 +1,8 @@
 package com.redveloper.home.core.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.redveloper.core.data.NetworkBoundResource
 import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.remote.ApiResponse
@@ -19,14 +22,24 @@ class RepositoryHome (
     private val appExecutors: AppExecutors
 ) : RepositoryHomeImpl {
 
-    override fun getAllGames(): Flow<Resource<List<Game>>> {
-        return object : NetworkBoundResource<List<Game>, List<GameResponse>>(){
-            override fun loadFromDB(): Flow<List<Game>> {
-                return localDataSource.getAllGame()
-                    .map { GameMapper.entityToDomain(it) }
+    override fun getAllGames(): Flow<Resource<PagingData<Game>>> {
+        return object : NetworkBoundResource<PagingData<Game>, List<GameResponse>>(){
+            override fun loadFromDB(): Flow<PagingData<Game>> {
+                 return Pager(
+                    PagingConfig(
+                        pageSize = 20,
+                        enablePlaceholders = true,
+                        maxSize = 200
+                    )
+                ){
+                    localDataSource.getAllGame()
+                }.flow
+                     .map {
+                         GameMapper.entityToDomain(it)
+                     }
             }
 
-            override fun shouldFetch(data: List<Game>?): Boolean {
+            override fun shouldFetch(data: PagingData<Game>?): Boolean {
                 return true
             }
 

@@ -35,13 +35,13 @@ object Versions {
     val espresso = "3.3.0"
     val multidex = "2.0.1"
     val cardview = "1.0.0"
-    val room = "2.2.5"
+    val room = "2.3.0-alpha02"
     val koin = "2.1.6"
     val coroutines = "1.3.9"
     val loggingInterceptor = "4.9.0"
     val lifecycle = "2.2.0"
     val navigation = "2.3.0"
-    val pagedList = "2.1.2"
+    val pagedList = "3.0.0-alpha07"
 }
 
 object Libraries {

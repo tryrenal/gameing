@@ -6,17 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
 import com.redveloper.home.core.domain.model.Game
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     val homeViewModel: HomeViewModel by viewModel()
-    private lateinit var homeAdapter: HomeAdapter
+    private val homeAdapter = HomeAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,7 @@ class HomeFragment : Fragment() {
 
                         }
                         is Resource.Success -> {
+                            Log.i("dataGame", data.data.toString())
                             data.data?.let { showDataGame(it) }
                         }
                         is Resource.Error -> {
@@ -47,11 +50,10 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showDataGame(data: List<Game>) {
-        homeAdapter = HomeAdapter(data)
-        with(rv_game) {
-            adapter = homeAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+    private fun showDataGame(data: PagingData<Game>) {
+        lifecycleScope.launch {
+            homeAdapter.submitData(data)
         }
+        rv_game.adapter = homeAdapter
     }
 }

@@ -1,5 +1,7 @@
 package com.redveloper.core.data.source.local
 
+import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import com.redveloper.core.data.source.local.entity.CreatorEntity
 import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.room.dao.CreatorDao
@@ -11,7 +13,7 @@ class LocalDataSource (
     private val creatorDao: CreatorDao
 ) {
     //game
-    fun getAllGame() : Flow<List<GameEntity>> = gameDao.getAllGame()
+    fun getAllGame() : PagingSource<Int, GameEntity> = gameDao.getAllGame()
     suspend fun insertGame(data: List<GameEntity>) = gameDao.insert(data)
 
     //creator
