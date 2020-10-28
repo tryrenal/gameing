@@ -21,4 +21,6 @@ dependencies {
     api Libraries.navigationKtx
     //pagination
     api Libraries.pagedList
+    //timber
+    api Libraries.timber
 }

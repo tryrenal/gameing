@@ -42,6 +42,7 @@ object Versions {
     val lifecycle = "2.2.0"
     val navigation = "2.3.0"
     val pagedList = "3.0.0-alpha07"
+    val timber = "4.7.1"
 }
 
 object Libraries {
@@ -67,6 +68,8 @@ object Libraries {
     val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val navigationKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     val pagedList = "androidx.paging:paging-runtime:${Versions.pagedList}"
+    //timber
+    val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 }
 
 object KotlinLibraries {
