@@ -31,7 +31,7 @@ class RepositoryCreator (
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<CreatorResponse>>> {
-                return remoteDataSource.getAllCreator()
+                return remoteDataSource.getAllCreator(page = 1)
             }
 
             override suspend fun saveCallResult(data: List<CreatorResponse>) {
