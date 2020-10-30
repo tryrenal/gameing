@@ -17,6 +17,6 @@ class LocalDataSource (
     suspend fun insertGame(data: List<GameEntity>) = gameDao.insert(data)
 
     //creator
-    fun getAllCreator() : Flow<List<CreatorEntity>> = creatorDao.getAllCreator()
+    fun getAllCreator() : PagingSource<Int, CreatorEntity> = creatorDao.getAllCreator()
     suspend fun insertCreator(data: List<CreatorEntity>) = creatorDao.insert(data)
 }

@@ -1,5 +1,7 @@
 package com.redveloper.creator.core.utils
 
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.redveloper.core.data.source.local.entity.CreatorEntity
 import com.redveloper.core.data.source.remote.response.creator.CreatorResponse
 import com.redveloper.creator.core.domain.model.Creator
@@ -18,7 +20,7 @@ object CreatorMapper  {
         }
     }
 
-    fun entityToDomain(input: List<CreatorEntity>) : List<Creator>{
+    fun entityToDomain(input: PagingData<CreatorEntity>) : PagingData<Creator>{
         return input.map {
             Creator(
                 id = it.id,

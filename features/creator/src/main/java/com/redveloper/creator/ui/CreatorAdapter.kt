@@ -1,15 +1,23 @@
 package com.redveloper.creator.ui
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.redveloper.creator.core.domain.model.Creator
 
-class CreatorAdapter() : RecyclerView.Adapter<CreatorViewHolder>(){
+class CreatorAdapter() : PagingDataAdapter<Creator, CreatorViewHolder>(diffCallback){
 
-    private var items: ArrayList<Creator> = ArrayList()
+    companion object{
+        private val diffCallback = object : DiffUtil.ItemCallback<Creator>(){
+            override fun areItemsTheSame(oldItem: Creator, newItem: Creator): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    constructor(data: List<Creator>) : this(){
-        this.items = data as ArrayList<Creator>
+            override fun areContentsTheSame(oldItem: Creator, newItem: Creator): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreatorViewHolder {
@@ -17,10 +25,7 @@ class CreatorAdapter() : RecyclerView.Adapter<CreatorViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: CreatorViewHolder, position: Int) {
-        holder.bindData(items[position])
+        holder.bindData(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
 }

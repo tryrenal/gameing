@@ -7,16 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.redveloper.core.vo.Resource
 import com.redveloper.creator.R
 import com.redveloper.creator.core.domain.model.Creator
 import kotlinx.android.synthetic.main.fragment_creator.*
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class CreatorFragment : Fragment() {
 
     val creatorViewModel: CreatorViewModel by viewModel()
+    private val creatorAdapter = CreatorAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +40,11 @@ class CreatorFragment : Fragment() {
                         is Resource.Loading -> {
                         }
                         is Resource.Success -> {
-                            Log.i("dataCreator", data.data.toString())
+                            Timber.i(data.data.toString())
                             data.data?.let { showingData(it) }
                         }
                         is Resource.Error -> {
-                            Log.i("errorCreator", data.message.toString())
+                            Timber.e(data.message)
                         }
                     }
                 }
@@ -47,8 +52,10 @@ class CreatorFragment : Fragment() {
         }
     }
 
-    private fun showingData(data: List<Creator>){
-        val creatorAdapter = CreatorAdapter(data)
+    private fun showingData(data: PagingData<Creator>){
+        lifecycleScope.launch {
+            creatorAdapter.submitData(data)
+        }
         with(rv_creator){
             adapter = creatorAdapter
             layoutManager = LinearLayoutManager(requireContext())

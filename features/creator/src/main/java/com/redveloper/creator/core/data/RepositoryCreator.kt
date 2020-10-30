@@ -1,5 +1,8 @@
 package com.redveloper.creator.core.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.redveloper.core.data.NetworkBoundResource
 import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.remote.ApiResponse
@@ -18,15 +21,24 @@ class RepositoryCreator (
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : RepositoryCreatorImpl  {
-    override fun getAllCreator(): Flow<Resource<List<Creator>>> {
-        return object : NetworkBoundResource<List<Creator>, List<CreatorResponse>>(){
-            override fun loadFromDB(): Flow<List<Creator>> {
-                return localDataSource.getAllCreator().map {
-                    CreatorMapper.entityToDomain(it)
-                }
+    override fun getAllCreator(): Flow<Resource<PagingData<Creator>>> {
+        return object : NetworkBoundResource<PagingData<Creator>, List<CreatorResponse>>(){
+            override fun loadFromDB(): Flow<PagingData<Creator>> {
+                return Pager(
+                    config = PagingConfig(
+                        pageSize = 20,
+                        enablePlaceholders = true,
+                        maxSize = 200
+                    )
+                ){
+                    localDataSource.getAllCreator()
+                }.flow
+                    .map {
+                        CreatorMapper.entityToDomain(it)
+                    }
             }
 
-            override fun shouldFetch(data: List<Creator>?): Boolean {
+            override fun shouldFetch(data: PagingData<Creator>?): Boolean {
                 return true
             }
 
