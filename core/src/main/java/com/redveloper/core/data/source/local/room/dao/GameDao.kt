@@ -10,4 +10,7 @@ abstract class GameDao : BaseDao<GameEntity> {
 
     @Query("SELECT * FROM gameentity ORDER BY id COLLATE NOCASE ASC")
     abstract fun getAllGame(): PagingSource<Int, GameEntity>
+
+    @Query("SELECT * FROM gameentity WHERE id = :id LIMIT 1")
+    abstract fun getGameById(id: Int): GameEntity
 }

@@ -22,7 +22,7 @@ object GameMapper {
         }
     }
 
-    fun entityToDomain(input: PagingData<GameEntity>) : PagingData<Game>{
+    fun entityToDomainPaging(input: PagingData<GameEntity>) : PagingData<Game>{
         return input.map {
              Game(
                 id = it.id,
@@ -34,5 +34,17 @@ object GameMapper {
                 ratingTop = it.rating_top
             )
         }
+    }
+
+    fun entityToDomain(input: GameEntity) : Game {
+        return Game(
+            id = input.id,
+            name = input.name,
+            slug = input.slug,
+            released = input.released,
+            backgroundImage = input.backgroundImage,
+            rating = input.rating,
+            ratingTop = input.rating_top
+        )
     }
 }

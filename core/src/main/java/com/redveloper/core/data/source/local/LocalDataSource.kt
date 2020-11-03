@@ -14,6 +14,7 @@ class LocalDataSource (
 ) {
     //game
     fun getAllGame() : PagingSource<Int, GameEntity> = gameDao.getAllGame()
+    fun getGameById(id: Int) : GameEntity = gameDao.getGameById(id)
     suspend fun insertGame(data: List<GameEntity>) = gameDao.insert(data)
 
     //creator

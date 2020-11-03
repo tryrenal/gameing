@@ -32,7 +32,7 @@ class HomeAdapter : PagingDataAdapter<Game, HomeViewHolder>(diffCallback) {
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.bindData(getItem(position))
         holder.itemView.setOnClickListener {
-            callback.onItemHomeClicked()
+            getItem(position)?.id?.let { id -> callback.onItemHomeClicked(id) }
         }
     }
 

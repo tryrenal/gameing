@@ -35,7 +35,7 @@ class RepositoryHome (
                     localDataSource.getAllGame()
                 }.flow
                      .map {
-                         GameMapper.entityToDomain(it)
+                         GameMapper.entityToDomainPaging(it)
                      }
             }
 
@@ -52,5 +52,10 @@ class RepositoryHome (
                 localDataSource.insertGame(gameEntity)
             }
         }.asFlow()
+    }
+
+    override fun getGameById(id: Int): Game {
+        val data = localDataSource.getGameById(id)
+        return GameMapper.entityToDomain(data)
     }
 }

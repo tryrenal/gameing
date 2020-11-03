@@ -1,5 +1,6 @@
 package com.redveloper.home.ui.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.paging.PagingData
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
 import com.redveloper.home.core.domain.model.Game
+import com.redveloper.home.ui.detail.DetailHomeActivity
 import com.redveloper.home.ui.list.adapter.HomeAdapter
 import com.redveloper.home.ui.list.adapter.IHomeAdapter
+import com.redveloper.home.utils.idGame
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -61,7 +64,9 @@ class HomeFragment : Fragment(), IHomeAdapter {
         homeAdapter.setCallback(this)
     }
 
-    override fun onItemHomeClicked() {
-        Toast.makeText(requireContext(), "item clicked", Toast.LENGTH_SHORT).show()
+    override fun onItemHomeClicked(id: Int) {
+        val intent = Intent(requireContext(), DetailHomeActivity::class.java)
+        intent.putExtra(idGame, id)
+        requireContext().startActivity(intent)
     }
 }
