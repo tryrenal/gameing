@@ -1,4 +1,4 @@
-package com.redveloper.home.ui
+package com.redveloper.home.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -12,7 +12,7 @@ import com.redveloper.home.core.data.RepositoryHome
 import com.redveloper.home.core.domain.repository.RepositoryHomeImpl
 import com.redveloper.home.core.domain.usecase.HomeInteractor
 import com.redveloper.home.core.domain.usecase.HomeUseCase
-import com.redveloper.home.ui.HomeViewModel
+import com.redveloper.home.ui.list.HomeViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
