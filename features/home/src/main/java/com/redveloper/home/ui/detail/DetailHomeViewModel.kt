@@ -7,4 +7,5 @@ class DetailHomeViewModel(
     private val useCase: HomeUseCase
 ) : ViewModel(){
 
+    fun getDetailGame(id : Int) = useCase.getGameById(id)
 }

@@ -1,5 +1,7 @@
 package com.redveloper.home.core.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -54,8 +56,8 @@ class RepositoryHome (
         }.asFlow()
     }
 
-    override fun getGameById(id: Int): Game {
+    override fun getGameById(id: Int): LiveData<Game> {
         val data = localDataSource.getGameById(id)
-        return GameMapper.entityToDomain(data)
+        return data.map { GameMapper.entityToDomain(it) }
     }
 }

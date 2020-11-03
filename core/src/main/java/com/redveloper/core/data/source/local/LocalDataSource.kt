@@ -1,5 +1,6 @@
 package com.redveloper.core.data.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import com.redveloper.core.data.source.local.entity.CreatorEntity
@@ -14,7 +15,7 @@ class LocalDataSource (
 ) {
     //game
     fun getAllGame() : PagingSource<Int, GameEntity> = gameDao.getAllGame()
-    fun getGameById(id: Int) : GameEntity = gameDao.getGameById(id)
+    fun getGameById(id: Int) : LiveData<GameEntity> = gameDao.getGameById(id)
     suspend fun insertGame(data: List<GameEntity>) = gameDao.insert(data)
 
     //creator

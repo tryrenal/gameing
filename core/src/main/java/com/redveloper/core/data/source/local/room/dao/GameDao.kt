@@ -1,9 +1,11 @@
 package com.redveloper.core.data.source.local.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import com.redveloper.core.data.source.local.entity.GameEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class GameDao : BaseDao<GameEntity> {
@@ -12,5 +14,5 @@ abstract class GameDao : BaseDao<GameEntity> {
     abstract fun getAllGame(): PagingSource<Int, GameEntity>
 
     @Query("SELECT * FROM gameentity WHERE id = :id LIMIT 1")
-    abstract fun getGameById(id: Int): GameEntity
+    abstract fun getGameById(id: Int): LiveData<GameEntity>
 }

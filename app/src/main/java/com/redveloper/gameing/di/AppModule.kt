@@ -12,6 +12,7 @@ import com.redveloper.home.core.data.RepositoryHome
 import com.redveloper.home.core.domain.repository.RepositoryHomeImpl
 import com.redveloper.home.core.domain.usecase.HomeInteractor
 import com.redveloper.home.core.domain.usecase.HomeUseCase
+import com.redveloper.home.ui.detail.DetailHomeViewModel
 import com.redveloper.home.ui.list.HomeViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -32,4 +33,5 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { CreatorViewModel(get()) }
+    viewModel { DetailHomeViewModel(get()) }
 }
