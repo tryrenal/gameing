@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
 import com.redveloper.home.core.domain.model.Game
+import com.redveloper.home.ui.list.adapter.HomeAdapter
+import com.redveloper.home.ui.list.adapter.IHomeAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), IHomeAdapter {
 
     val homeViewModel: HomeViewModel by viewModel()
     private val homeAdapter = HomeAdapter()
@@ -55,5 +58,10 @@ class HomeFragment : Fragment() {
             homeAdapter.submitData(data)
         }
         rv_game.adapter = homeAdapter
+        homeAdapter.setCallback(this)
+    }
+
+    override fun onItemHomeClicked() {
+        Toast.makeText(requireContext(), "item clicked", Toast.LENGTH_SHORT).show()
     }
 }

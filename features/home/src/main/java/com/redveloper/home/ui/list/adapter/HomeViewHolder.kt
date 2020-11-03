@@ -1,4 +1,4 @@
-package com.redveloper.home.ui.list
+package com.redveloper.home.ui.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.layout_item_home.view.*
 
 class HomeViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.layout_item_home, parent, false)
-) {
+){
+
     fun bindData(data: Game?) {
         with(itemView) {
             Glide.with(this)
@@ -19,4 +20,5 @@ class HomeViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             tv_title_item_home.text = data?.name
         }
     }
+
 }

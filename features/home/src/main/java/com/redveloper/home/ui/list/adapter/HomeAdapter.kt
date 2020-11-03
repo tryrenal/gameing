@@ -1,4 +1,4 @@
-package com.redveloper.home.ui.list
+package com.redveloper.home.ui.list.adapter
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -6,6 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.redveloper.home.core.domain.model.Game
 
 class HomeAdapter : PagingDataAdapter<Game, HomeViewHolder>(diffCallback) {
+
+    private lateinit var callback : IHomeAdapter
+
+    fun setCallback(callback: IHomeAdapter){
+        this.callback = callback
+    }
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Game>() {
@@ -25,5 +31,9 @@ class HomeAdapter : PagingDataAdapter<Game, HomeViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.bindData(getItem(position))
+        holder.itemView.setOnClickListener {
+            callback.onItemHomeClicked()
+        }
     }
+
 }
