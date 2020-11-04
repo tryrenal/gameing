@@ -18,7 +18,8 @@ class CreatorViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
                 .load(data?.image)
                 .into(img_item_creator)
 
-            tv_name_creator.text = data?.name
+            tv_name_item_creator.text = data?.name
+            tv_games_count_item_creator.text = data?.gamesCount.toString()
         }
     }
 }
