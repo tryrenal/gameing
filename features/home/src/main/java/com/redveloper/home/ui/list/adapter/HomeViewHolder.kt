@@ -1,5 +1,6 @@
 package com.redveloper.home.ui.list.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +13,17 @@ class HomeViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.layout_item_home, parent, false)
 ){
 
+    @SuppressLint("SetTextI18n")
     fun bindData(data: Game?) {
         with(itemView) {
             Glide.with(this)
                 .load(data?.backgroundImage)
                 .into(img_item_home)
+
             tv_title_item_home.text = data?.name
+            tv_released_date_item_home.text = "released : ${data?.released}"
+            tv_rating_item_home.text = "rating : ${data?.rating}"
+            rating_top.text = " / ${data?.ratingTop}"
         }
     }
-
 }
