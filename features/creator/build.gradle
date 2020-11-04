@@ -24,4 +24,5 @@ dependencies {
     implementation project(Modules.common)
     implementation project(Modules.core)
     implementation Libraries.glide
+    annotationProcessor Libraries.glideCompiler
 }

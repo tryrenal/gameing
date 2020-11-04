@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.layout_item_home.view.*
 
 class HomeViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.layout_item_home, parent, false)
-){
+) {
 
     @SuppressLint("SetTextI18n")
     fun bindData(data: Game?) {

@@ -26,7 +26,7 @@ object Versions {
     val appCompat = "1.2.0"
     val constraintLayout = "2.0.2"
     val recyclerview = "1.0.0"
-    val glide = "4.11.0"
+    val glide = "4.10.0"
     val materialDesign = "1.1.0"
     val retrofit = "2.9.0"
     val junit = "4.13"
@@ -48,6 +48,7 @@ object Versions {
 object Libraries {
     //glide
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
     //koin
     val koinCore = "org.koin:koin-core:${Versions.koin}"
     val koinAndroid = "org.koin:koin-android:${Versions.koin}"

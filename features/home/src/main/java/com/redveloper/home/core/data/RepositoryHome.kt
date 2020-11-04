@@ -42,7 +42,7 @@ class RepositoryHome (
             }
 
             override fun shouldFetch(data: PagingData<Game>?): Boolean {
-                return data == null
+                return true
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<GameResponse>>> {

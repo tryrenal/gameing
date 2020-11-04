@@ -73,10 +73,11 @@
         app:layout_constraintTop_toBottomOf="@id/gd_top_center" />
 
     <ImageView
-        android:id="@+id/img_dummy"
+        android:id="@+id/img_ilustration_game"
         android:layout_width="100dp"
         android:layout_height="0dp"
-        android:background="@color/colorBlack"
+        android:scaleType="centerInside"
+        android:src="@drawable/ai_standing_hold_hp"
         app:layout_constraintBottom_toBottomOf="@id/rv_game"
         app:layout_constraintLeft_toRightOf="@id/gd_left"
         app:layout_constraintTop_toTopOf="@id/rv_game"
@@ -84,10 +85,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_game"
+        android:layout_marginStart="15dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        app:layout_constraintLeft_toRightOf="@id/img_dummy"
+        app:layout_constraintLeft_toRightOf="@id/img_ilustration_game"
         app:layout_constraintRight_toRightOf="@id/gd_right"
         app:layout_constraintTop_toBottomOf="@id/greeting" />
 

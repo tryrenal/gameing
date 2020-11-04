@@ -3,7 +3,7 @@
     package="com.redveloper.home">
 
     <application>
-        <activity android:name=".ui.detail.DetailHomeActivity"></activity>
+        <activity android:name=".ui.detail.DetailHomeActivity"/>
     </application>
 
 </manifest>

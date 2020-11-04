@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.redveloper.home.ui.list
 
 import android.annotation.SuppressLint
@@ -85,13 +83,13 @@ class HomeFragment : Fragment(), IHomeAdapter {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val transition = Slide(Gravity.LEFT)
-                transition.addTarget(img_dummy)
+                transition.addTarget(img_ilustration_game)
                 TransitionManager.beginDelayedTransition(parent, transition)
 
                 if (dx <= 0) {
-                    img_dummy.visibility = View.VISIBLE
+                    img_ilustration_game.visibility = View.VISIBLE
                 } else {
-                    img_dummy.visibility = View.GONE
+                    img_ilustration_game.visibility = View.GONE
                 }
             }
         })
