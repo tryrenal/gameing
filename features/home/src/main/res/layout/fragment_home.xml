@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/colorPurple"
     tools:context=".ui.list.HomeFragment">
 
@@ -39,9 +41,9 @@
         android:id="@+id/search_game"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:background="@drawable/bg_rounded"
         android:backgroundTint="@color/colorDarkPurple"
         android:elevation="5dp"
-        android:background="@drawable/bg_rounded"
         app:iconifiedByDefault="false"
         app:layout_constraintLeft_toLeftOf="@id/gd_left"
         app:layout_constraintRight_toRightOf="@id/gd_right"
@@ -70,13 +72,22 @@
         app:layout_constraintRight_toLeftOf="@id/gd_right"
         app:layout_constraintTop_toBottomOf="@id/gd_top_center" />
 
+    <ImageView
+        android:id="@+id/img_dummy"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:background="@color/colorBlack"
+        app:layout_constraintBottom_toBottomOf="@id/rv_game"
+        app:layout_constraintLeft_toRightOf="@id/gd_left"
+        app:layout_constraintTop_toTopOf="@id/rv_game"
+        tools:ignore="ContentDescription" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_game"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/gd_left"
+        app:layout_constraintLeft_toRightOf="@id/img_dummy"
         app:layout_constraintRight_toRightOf="@id/gd_right"
         app:layout_constraintTop_toBottomOf="@id/greeting" />
 

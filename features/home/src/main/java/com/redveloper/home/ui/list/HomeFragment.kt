@@ -1,18 +1,22 @@
+@file:Suppress("DEPRECATION")
+
 package com.redveloper.home.ui.list
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
 import com.redveloper.home.core.domain.model.Game
@@ -25,11 +29,12 @@ import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+
 class HomeFragment : Fragment(), IHomeAdapter {
 
     val homeViewModel: HomeViewModel by viewModel()
     private val homeAdapter = HomeAdapter()
-    private lateinit var progressDialog : ProgressDialog
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,19 +70,38 @@ class HomeFragment : Fragment(), IHomeAdapter {
             })
 
             setGreeting()
+            setParallaxRecyclerview()
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setGreeting(){
+    private fun setGreeting() {
         greeting.text = "Hello\n${homeViewModel.setGreeting()}"
+    }
+
+    private fun setParallaxRecyclerview() {
+        rv_game.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            @SuppressLint("RtlHardcoded")
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val transition = Slide(Gravity.LEFT)
+                transition.addTarget(img_dummy)
+                TransitionManager.beginDelayedTransition(parent, transition)
+
+                if (dx <= 0) {
+                    img_dummy.visibility = View.VISIBLE
+                } else {
+                    img_dummy.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun showDataGame(data: PagingData<Game>) {
         lifecycleScope.launch {
             homeAdapter.submitData(data)
         }
-        with(rv_game){
+        with(rv_game) {
             adapter = homeAdapter
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }
