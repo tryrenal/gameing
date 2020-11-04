@@ -1,5 +1,6 @@
 package com.redveloper.home.ui.list
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -67,8 +68,9 @@ class HomeFragment : Fragment(), IHomeAdapter {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setGreeting(){
-        greeting.text = "Hello\nMorning"
+        greeting.text = "Hello\n${homeViewModel.setGreeting()}"
     }
 
     private fun showDataGame(data: PagingData<Game>) {
