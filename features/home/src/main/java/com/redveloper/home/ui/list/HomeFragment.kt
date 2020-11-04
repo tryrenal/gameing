@@ -62,7 +62,13 @@ class HomeFragment : Fragment(), IHomeAdapter {
                     }
                 }
             })
+
+            setGreeting()
         }
+    }
+
+    private fun setGreeting(){
+        greeting.text = "Hello\nMorning"
     }
 
     private fun showDataGame(data: PagingData<Game>) {

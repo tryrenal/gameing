@@ -6,4 +6,6 @@
     <string name="released_date">Released Date</string>
     <string name="rating">Rating</string>
     <string name="loading">Loading</string>
+    <string name="search">Search</string>
+    <string name="greeting">Greeting</string>
 </resources>
