@@ -25,5 +25,6 @@ dependencies {
     implementation project(Modules.core)
     implementation Libraries.glide
     annotationProcessor Libraries.glideCompiler
+    implementation Libraries.circleImage
 
 }

@@ -43,6 +43,7 @@ object Versions {
     val navigation = "2.3.0"
     val pagedList = "3.0.0-alpha07"
     val timber = "4.7.1"
+    val circleImage = "3.1.0"
 }
 
 object Libraries {
@@ -71,6 +72,8 @@ object Libraries {
     val pagedList = "androidx.paging:paging-runtime:${Versions.pagedList}"
     //timber
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    //circle image
+    val circleImage = "de.hdodenhof:circleimageview:${Versions.circleImage}"
 }
 
 object KotlinLibraries {
