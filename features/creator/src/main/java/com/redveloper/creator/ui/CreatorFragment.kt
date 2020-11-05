@@ -1,18 +1,17 @@
 package com.redveloper.creator.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.redveloper.core.vo.Resource
 import com.redveloper.creator.R
 import com.redveloper.creator.core.domain.model.Creator
+import com.redveloper.creator.ui.adapter.CreatorAdapter
 import kotlinx.android.synthetic.main.fragment_creator.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
