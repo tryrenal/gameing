@@ -56,7 +56,7 @@ class RepositoryHome (
         }.asFlow()
     }
 
-    override fun getGameById(id: Int): LiveData<Game> {
+    override fun getGameById(id: Int): Flow<Game> {
         val data = localDataSource.getGameById(id)
         return data.map { GameMapper.entityToDomain(it) }
     }

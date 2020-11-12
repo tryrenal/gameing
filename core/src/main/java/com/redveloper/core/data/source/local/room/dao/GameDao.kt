@@ -14,5 +14,5 @@ abstract class GameDao : BaseDao<GameEntity> {
     abstract fun getAllGame(): PagingSource<Int, GameEntity>
 
     @Query("SELECT * FROM gameentity WHERE id = :id LIMIT 1")
-    abstract fun getGameById(id: Int): LiveData<GameEntity>
+    abstract fun getGameById(id: Int): Flow<GameEntity>
 }

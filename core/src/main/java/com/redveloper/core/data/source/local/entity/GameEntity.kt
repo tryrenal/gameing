@@ -11,6 +11,8 @@ data class GameEntity (
     val id: Int,
     @ColumnInfo(name = "name")
     val name: String?,
+    @ColumnInfo(name = "description")
+    val description: String?,
     @ColumnInfo(name = "slug")
     val slug: String?,
     @ColumnInfo(name = "released")
@@ -20,5 +22,7 @@ data class GameEntity (
     @ColumnInfo(name = "rating")
     val rating: Double?,
     @ColumnInfo(name = "rating_top")
-    val rating_top: Int?
+    val rating_top: Int?,
+    @ColumnInfo(name = "isFavorit")
+    val isFavorit: Boolean = false
 )

@@ -1,14 +1,13 @@
 package com.redveloper.home.core.utils
 
 import androidx.paging.PagingData
-import androidx.paging.flatMap
 import androidx.paging.map
 import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.remote.response.game.GameResponse
 import com.redveloper.home.core.domain.model.Game
 
 object GameMapper {
-    fun responseToEntity(input: List<GameResponse>) : List<GameEntity> {
+    fun responseToEntity(input: List<GameResponse>): List<GameEntity> {
         return input.map {
             GameEntity(
                 id = it.id,
@@ -17,14 +16,15 @@ object GameMapper {
                 released = it.released,
                 backgroundImage = it.background_image,
                 rating = it.rating,
-                rating_top = it.ratingTop
+                rating_top = it.ratingTop,
+                description = it.description
             )
         }
     }
 
-    fun entityToDomainPaging(input: PagingData<GameEntity>) : PagingData<Game>{
+    fun entityToDomainPaging(input: PagingData<GameEntity>): PagingData<Game> {
         return input.map {
-             Game(
+            Game(
                 id = it.id,
                 name = it.name,
                 slug = it.slug,
@@ -36,7 +36,7 @@ object GameMapper {
         }
     }
 
-    fun entityToDomain(input: GameEntity) : Game {
+    fun entityToDomain(input: GameEntity): Game {
         return Game(
             id = input.id,
             name = input.name,

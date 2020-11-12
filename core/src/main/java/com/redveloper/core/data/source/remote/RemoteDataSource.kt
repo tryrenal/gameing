@@ -26,6 +26,17 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getDetailGame(id: Int): Flow<ApiResponse<GameResponse>> {
+        return flow {
+            try {
+                val response = apiService.getDetailGames(id)
+                val data = response
+                emit(ApiResponse.Success(data))
+            }catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 
     fun getAllCreator(page: Int): Flow<ApiResponse<List<CreatorResponse>>> {
         return flow {

@@ -1,14 +1,9 @@
 package com.redveloper.creator.ui
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
@@ -58,14 +53,13 @@ class CreatorFragment : Fragment() {
         }
     }
 
-    private fun showingData(data: PagingData<Creator>){
+    private fun showingData(data: PagingData<Creator>) {
         lifecycleScope.launch {
             creatorAdapter.submitData(data)
         }
-        with(rv_creator){
+        with(rv_creator) {
             adapter = creatorAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
-
 }
