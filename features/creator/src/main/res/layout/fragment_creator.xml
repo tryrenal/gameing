@@ -7,24 +7,63 @@
     tools:context=".ui.CreatorFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gd_top"
+        android:id="@+id/gd_top_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bg_side_bottom_rounded"
         android:backgroundTint="@color/colorPurple"
-        app:layout_constraintBottom_toTopOf="@id/gd_top"
+        app:layout_constraintBottom_toTopOf="@id/gd_top_center"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:id="@+id/search_creator"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/colorWhite"
+        android:elevation="5dp"
+        android:queryHint="@string/search"
+        app:iconifiedByDefault="false"
+        app:layout_constraintLeft_toLeftOf="@id/gd_left"
+        app:layout_constraintRight_toRightOf="@id/gd_right"
+        app:layout_constraintTop_toBottomOf="@id/gd_top" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_creator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/gd_left"
+        app:layout_constraintRight_toRightOf="@id/gd_right"
+        app:layout_constraintTop_toBottomOf="@id/search_creator"
+        tools:listitem="@layout/layout_item_creator_odd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

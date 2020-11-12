@@ -1,9 +1,14 @@
 package com.redveloper.creator.ui
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
@@ -17,6 +22,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+@Suppress("DEPRECATION")
 class CreatorFragment : Fragment() {
 
     val creatorViewModel: CreatorViewModel by viewModel()
@@ -33,6 +39,7 @@ class CreatorFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
+
             creatorViewModel.getAllCreator().observe(viewLifecycleOwner, { data ->
                 if (data != null) {
                     when (data) {

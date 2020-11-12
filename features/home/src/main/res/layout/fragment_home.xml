@@ -42,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/colorDarkPurple"
+        android:backgroundTint="@color/colorWhite"
         android:elevation="5dp"
         app:iconifiedByDefault="false"
         app:layout_constraintLeft_toLeftOf="@id/gd_left"
