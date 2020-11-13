@@ -64,4 +64,17 @@ object GameMapper {
             isFavorit = input.isFavorit
         )
     }
+
+    fun domainToEntity(input: Game) : GameEntity {
+        return GameEntity(
+            id = input.id,
+            name = input.name,
+            slug = input.slug,
+            released = input.released,
+            backgroundImage = input.backgroundImage,
+            rating = input.rating,
+            rating_top = input.ratingTop,
+            description = input.desc
+        )
+    }
 }

@@ -15,7 +15,6 @@ import com.redveloper.home.core.domain.repository.RepositoryHomeImpl
 import com.redveloper.home.core.utils.GameMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 
 class RepositoryHome(
     private val remoteDataSource: RemoteDataSource,
@@ -71,8 +70,28 @@ class RepositoryHome(
 
             override suspend fun saveCallResult(data: GameResponse) {
                 val gameEntity = GameMapper.responseToEntity(data)
-                localDataSource.updateGame(gameEntity)
+                appExecutors.diskIO().execute { localDataSource.updateGame(gameEntity) }
             }
         }.asFlow()
+    }
+
+    override fun getFavoriteGame(): Flow<PagingData<Game>> {
+        return Pager(
+            PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = true,
+                maxSize = 200
+            )
+        ) {
+            localDataSource.getFavoriteGame()
+        }.flow
+            .map {
+                GameMapper.entityToDomainPaging(it)
+            }
+    }
+
+    override fun setFavoriteGame(game: Game, state: Boolean) {
+        val gameEntity = GameMapper.domainToEntity(game)
+        appExecutors.diskIO().execute { localDataSource.setFavoritGame(gameEntity, state) }
     }
 }

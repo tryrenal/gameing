@@ -15,7 +15,12 @@ class LocalDataSource (
     fun getAllGame() : PagingSource<Int, GameEntity> = gameDao.getAllGame()
     fun getGameById(id: Int) : Flow<GameEntity> = gameDao.getGameById(id)
     suspend fun insertGame(data: List<GameEntity>) = gameDao.insert(data)
-    suspend fun updateGame(data: GameEntity) = gameDao.update(data)
+    fun updateGame(data: GameEntity) = gameDao.update(data)
+    fun getFavoriteGame() : PagingSource<Int, GameEntity> = gameDao.getFavoriteGame()
+    fun setFavoritGame(data: GameEntity, state: Boolean) {
+        data.isFavorit = state
+        gameDao.update(data)
+    }
 
     //creator
     fun getAllCreator() : PagingSource<Int, CreatorEntity> = creatorDao.getAllCreator()

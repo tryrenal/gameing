@@ -8,4 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface RepositoryHomeImpl {
     fun getAllGames(): Flow<Resource<PagingData<Game>>>
     fun getGameById(id: Int): Flow<Resource<Game>>
+    fun getFavoriteGame() : Flow<PagingData<Game>>
+    fun setFavoriteGame(game: Game, state: Boolean)
 }

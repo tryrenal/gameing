@@ -24,5 +24,5 @@ data class GameEntity (
     @ColumnInfo(name = "rating_top")
     val rating_top: Int?,
     @ColumnInfo(name = "isFavorit")
-    val isFavorit: Boolean = false
+    var isFavorit: Boolean = false
 )

@@ -1,6 +1,5 @@
 package com.redveloper.core.data.source.local.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
@@ -15,4 +14,7 @@ abstract class GameDao : BaseDao<GameEntity> {
 
     @Query("SELECT * FROM gameentity WHERE id = :id LIMIT 1")
     abstract fun getGameById(id: Int): Flow<GameEntity>
+
+    @Query("SELECT * FROM gameentity WHERE isFavorit = 1")
+    abstract fun getFavoriteGame() : PagingSource<Int, GameEntity>
 }
