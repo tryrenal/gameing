@@ -20,21 +20,23 @@ class DetailHomeActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null){
             val id = bundle.getInt(idGame)
-//            detailHomeViewModel.getDetailGame(id).observe(this, { data ->
-//                if (data != null){
-//                    when(data) {
-//                        is Resource.Loading -> {
-//
-//                        }
-//                        is Resource.Success -> {
-//                            Timber.i(data.data.toString())
-//                        }
-//                        is Resource.Error -> {
-//                            Timber.e(data.message)
-//                        }
-//                    }
-//                }
-//            })
+            detailHomeViewModel.getDetailGame(id).observe(this, { data ->
+                if (data != null){
+                    when(data) {
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Success -> {
+                            Timber.i(data.data.toString())
+                            dummy_title.text = data.data?.name
+                            dummy_desc.text = data.data?.desc
+                        }
+                        is Resource.Error -> {
+                            Timber.e(data.message)
+                        }
+                    }
+                }
+            })
         }
     }
 }

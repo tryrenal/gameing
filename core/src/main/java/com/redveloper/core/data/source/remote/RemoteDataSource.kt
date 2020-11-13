@@ -30,8 +30,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         return flow {
             try {
                 val response = apiService.getDetailGames(id)
-                val data = response
-                emit(ApiResponse.Success(data))
+                emit(ApiResponse.Success(response))
             }catch (e: Exception){
                 emit(ApiResponse.Error(e.toString()))
             }
