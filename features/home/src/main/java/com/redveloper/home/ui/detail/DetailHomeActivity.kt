@@ -2,8 +2,10 @@ package com.redveloper.home.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
+import com.redveloper.home.core.domain.model.Game
 import com.redveloper.home.utils.idGame
 import kotlinx.android.synthetic.main.activity_detail_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,9 +34,7 @@ class DetailHomeActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-                        Timber.i(data.data.toString())
-                        dummy_title.text = data.data?.name
-                        dummy_desc.text = data.data?.desc
+                        data.data?.let { setDataDetail(it) }
                     }
                     is Resource.Error -> {
                         Timber.e(data.message)
@@ -42,5 +42,16 @@ class DetailHomeActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun setDataDetail(data: Game){
+        tv_title_detail_home.text = data.name
+        tv_released_date_detail_home.text = data.released
+        tv_rating_detail_home.text = data.rating.toString()
+        tv_slug_detail_home.text = data.slug
+        Glide.with(this)
+            .load(data.backgroundImage)
+            .into(img_detail_home)
+        tv_descrtiption_detail_home.text = data.desc
     }
 }
