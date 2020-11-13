@@ -34,7 +34,7 @@ object GameMapper {
             description = input.description
         )
     }
-    
+
     fun entityToDomainPaging(input: PagingData<GameEntity>): PagingData<Game> {
         return input.map {
             Game(
@@ -45,7 +45,8 @@ object GameMapper {
                 backgroundImage = it.backgroundImage,
                 rating = it.rating,
                 ratingTop = it.rating_top,
-                desc = it.description
+                desc = it.description,
+                isFavorit = it.isFavorit
             )
         }
     }
@@ -59,7 +60,8 @@ object GameMapper {
             backgroundImage = input.backgroundImage,
             rating = input.rating,
             ratingTop = input.rating_top,
-            desc = input.description
+            desc = input.description,
+            isFavorit = input.isFavorit
         )
     }
 }
