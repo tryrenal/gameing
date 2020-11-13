@@ -10,5 +10,5 @@ class HomeInteractor(
     private val repositoryHomeImpl: RepositoryHomeImpl
 ) : HomeUseCase {
     override fun getAllGame(): Flow<Resource<PagingData<Game>>> = repositoryHomeImpl.getAllGames()
-    override fun getGameById(id: Int): Flow<Game> = repositoryHomeImpl.getGameById(id)
+    override fun getGameById(id: Int): Flow<Resource<Game>> = repositoryHomeImpl.getGameById(id)
 }

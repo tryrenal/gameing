@@ -7,7 +7,7 @@ import com.redveloper.core.data.source.remote.response.game.GameResponse
 import com.redveloper.home.core.domain.model.Game
 
 object GameMapper {
-    fun responseToEntity(input: List<GameResponse>): List<GameEntity> {
+    fun responseToEntityList(input: List<GameResponse>): List<GameEntity> {
         return input.map {
             GameEntity(
                 id = it.id,
@@ -22,6 +22,19 @@ object GameMapper {
         }
     }
 
+    fun responseToEntity(input: GameResponse): GameEntity {
+        return GameEntity(
+            id = input.id,
+            name = input.name,
+            slug = input.slug,
+            released = input.released,
+            backgroundImage = input.background_image,
+            rating = input.rating,
+            rating_top = input.ratingTop,
+            description = input.description
+        )
+    }
+    
     fun entityToDomainPaging(input: PagingData<GameEntity>): PagingData<Game> {
         return input.map {
             Game(
@@ -31,7 +44,8 @@ object GameMapper {
                 released = it.released,
                 backgroundImage = it.backgroundImage,
                 rating = it.rating,
-                ratingTop = it.rating_top
+                ratingTop = it.rating_top,
+                desc = it.description
             )
         }
     }
@@ -44,7 +58,8 @@ object GameMapper {
             released = input.released,
             backgroundImage = input.backgroundImage,
             rating = input.rating,
-            ratingTop = input.rating_top
+            ratingTop = input.rating_top,
+            desc = input.description
         )
     }
 }

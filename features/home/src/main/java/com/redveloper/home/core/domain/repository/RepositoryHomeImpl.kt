@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepositoryHomeImpl {
     fun getAllGames(): Flow<Resource<PagingData<Game>>>
-    fun getGameById(id: Int): Flow<Game>
+    fun getGameById(id: Int): Flow<Resource<Game>>
 }
