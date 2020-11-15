@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.redveloper.home.ui.list
 
 import android.annotation.SuppressLint
@@ -9,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +35,6 @@ import timber.log.Timber
 class HomeFragment : Fragment(), IHomeAdapter {
 
     val homeViewModel: HomeViewModel by viewModel()
-    private val homeAdapter = HomeAdapter()
     private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
@@ -47,29 +50,38 @@ class HomeFragment : Fragment(), IHomeAdapter {
         if (activity != null) {
             progressDialog = ProgressDialog(requireContext())
 
-            homeViewModel.games().observe(viewLifecycleOwner, { data ->
-                if (data != null) {
-                    when (data) {
-                        is Resource.Loading -> {
-                            progressDialog.setMessage(resources.getString(R.string.loading))
-                            progressDialog.show()
-                        }
-                        is Resource.Success -> {
-                            progressDialog.dismiss()
-                            Timber.i(data.data.toString())
-                            data.data?.let { showDataGame(it) }
-                        }
-                        is Resource.Error -> {
-                            progressDialog.dismiss()
-                            Timber.e(data.message)
-                        }
-                    }
-                }
-            })
+            getDataGame()
+            getFavoriteGame()
 
             setGreeting()
             setParallaxRecyclerview()
         }
+    }
+
+    private fun getDataGame(){
+        homeViewModel.games().observe(viewLifecycleOwner) { data ->
+            when (data) {
+                is Resource.Loading -> {
+                    progressDialog.setMessage(resources.getString(R.string.loading))
+                    progressDialog.show()
+                }
+                is Resource.Success -> {
+                    progressDialog.dismiss()
+                    Timber.i(data.data.toString())
+                    data.data?.let { showDataGame(it) }
+                }
+                is Resource.Error -> {
+                    progressDialog.dismiss()
+                    Timber.e(data.message)
+                }
+            }
+        }
+    }
+
+    private fun getFavoriteGame(){
+        homeViewModel.getFavoriteGame().observe(viewLifecycleOwner, Observer { data ->
+            showDataGameFavorite(data)
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -96,10 +108,23 @@ class HomeFragment : Fragment(), IHomeAdapter {
     }
 
     private fun showDataGame(data: PagingData<Game>) {
+        val homeAdapter = HomeAdapter()
         lifecycleScope.launch {
             homeAdapter.submitData(data)
         }
         with(rv_game) {
+            adapter = homeAdapter
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        }
+        homeAdapter.setCallback(this)
+    }
+
+    private fun showDataGameFavorite(data: PagingData<Game>) {
+        val homeAdapter = HomeAdapter()
+        lifecycleScope.launch {
+            homeAdapter.submitData(data)
+        }
+        with(rv_game_favorite){
             adapter = homeAdapter
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }

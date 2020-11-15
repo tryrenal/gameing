@@ -20,4 +20,6 @@ class HomeViewModel(
             else -> ""
         }
     }
+
+    fun getFavoriteGame() = useCase.getFavoriteGame().asLiveData()
 }
