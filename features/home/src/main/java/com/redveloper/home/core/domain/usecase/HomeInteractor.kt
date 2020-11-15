@@ -11,4 +11,5 @@ class HomeInteractor(
 ) : HomeUseCase {
     override fun getAllGame(): Flow<Resource<PagingData<Game>>> = repositoryHomeImpl.getAllGames()
     override fun getGameById(id: Int): Flow<Resource<Game>> = repositoryHomeImpl.getGameById(id)
+    override fun setFavoriteGame(data: Game, state: Boolean) = repositoryHomeImpl.setFavoriteGame(data, state)
 }

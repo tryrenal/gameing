@@ -2,6 +2,8 @@ package com.redveloper.home.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
@@ -11,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_detail_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class DetailHomeActivity : AppCompatActivity() {
+class DetailHomeActivity : AppCompatActivity(){
 
     val detailHomeViewModel : DetailHomeViewModel by viewModel()
 
@@ -24,24 +26,23 @@ class DetailHomeActivity : AppCompatActivity() {
             val id = bundle.getInt(idGame)
             getDataDetail(id)
         }
+
     }
 
     private fun getDataDetail(id: Int){
-        detailHomeViewModel.getDetailGame(id).observe(this, { data ->
-            if (data != null){
-                when(data) {
-                    is Resource.Loading -> {
+        detailHomeViewModel.getDetailGame(id).observe(this) { data ->
+            when(data) {
+                is Resource.Loading -> {
 
-                    }
-                    is Resource.Success -> {
-                        data.data?.let { setDataDetail(it) }
-                    }
-                    is Resource.Error -> {
-                        Timber.e(data.message)
-                    }
+                }
+                is Resource.Success -> {
+                    data.data?.let { setDataDetail(it) }
+                }
+                is Resource.Error -> {
+                    Timber.e(data.message)
                 }
             }
-        })
+        }
     }
 
     private fun setDataDetail(data: Game){
@@ -53,5 +54,21 @@ class DetailHomeActivity : AppCompatActivity() {
             .load(data.backgroundImage)
             .into(img_detail_home)
         tv_descrtiption_detail_home.text = data.desc
+
+        var favorite = data.isFavorit
+        setStatusFavorite(favorite)
+        fab_favorite_detail_home.setOnClickListener {
+            favorite = !favorite
+            detailHomeViewModel.setFavorite(data, favorite)
+            setStatusFavorite(favorite)
+        }
+    }
+
+    private fun setStatusFavorite(state: Boolean){
+        if(state){
+            fab_favorite_detail_home.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorit_red))
+        } else {
+            fab_favorite_detail_home.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorit_white))
+        }
     }
 }

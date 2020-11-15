@@ -6,6 +6,7 @@ import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.room.dao.CreatorDao
 import com.redveloper.core.data.source.local.room.dao.GameDao
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 
 class LocalDataSource (
     private val gameDao: GameDao,
@@ -18,6 +19,7 @@ class LocalDataSource (
     fun updateGame(data: GameEntity) = gameDao.update(data)
     fun getFavoriteGame() : PagingSource<Int, GameEntity> = gameDao.getFavoriteGame()
     fun setFavoritGame(data: GameEntity, state: Boolean) {
+        Timber.i(state.toString())
         data.isFavorit = state
         gameDao.update(data)
     }
