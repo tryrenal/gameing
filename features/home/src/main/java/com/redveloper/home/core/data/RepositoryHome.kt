@@ -15,7 +15,6 @@ import com.redveloper.home.core.domain.repository.RepositoryHomeImpl
 import com.redveloper.home.core.utils.GameMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 
 class RepositoryHome(
     private val remoteDataSource: RemoteDataSource,
@@ -62,7 +61,7 @@ class RepositoryHome(
             }
 
             override fun shouldFetch(data: Game?): Boolean {
-                return true
+                return data?.desc == null
             }
 
             override suspend fun createCall(): Flow<ApiResponse<GameResponse>> {
