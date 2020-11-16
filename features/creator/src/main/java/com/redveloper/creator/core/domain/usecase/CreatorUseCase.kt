@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CreatorUseCase {
     fun getAllCreator(): Flow<Resource<PagingData<Creator>>>
+    fun getAllCreatorPager() : Flow<PagingData<Creator>>
 }

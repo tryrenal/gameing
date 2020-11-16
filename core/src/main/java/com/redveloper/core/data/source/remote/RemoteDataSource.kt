@@ -40,7 +40,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     fun getAllCreator(page: Int): Flow<ApiResponse<List<CreatorResponse>>> {
         return flow {
             try {
-                val response = apiService.getAllCreator(page)
+                val response = apiService.getAllCreator(page = page)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()){
                     emit(ApiResponse.Success(response.results))

@@ -7,6 +7,7 @@ import com.redveloper.core.data.NetworkBoundResource
 import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.remote.ApiResponse
 import com.redveloper.core.data.source.remote.RemoteDataSource
+import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.core.data.source.remote.response.creator.CreatorResponse
 import com.redveloper.core.utils.AppExecutors
 import com.redveloper.core.vo.Resource
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RepositoryCreator (
+    private val apiService: ApiService,
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
@@ -27,8 +29,7 @@ class RepositoryCreator (
                 return Pager(
                     config = PagingConfig(
                         pageSize = 20,
-                        enablePlaceholders = true,
-                        maxSize = 200
+                        enablePlaceholders = true
                     )
                 ){
                     localDataSource.getAllCreator()
@@ -43,7 +44,7 @@ class RepositoryCreator (
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<CreatorResponse>>> {
-                return remoteDataSource.getAllCreator(page = 1)
+                return remoteDataSource.getAllCreator(1)
             }
 
             override suspend fun saveCallResult(data: List<CreatorResponse>) {
@@ -51,5 +52,13 @@ class RepositoryCreator (
                 localDataSource.insertCreator(creatorEntity)
             }
         }.asFlow()
+    }
+
+    override fun getAllCreaorPager(): Flow<PagingData<Creator>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = true),
+            pagingSourceFactory = {CreatorPagingSource(apiService = apiService)}
+        ).flow
+            .map { CreatorMapper.entityToDomain(it) }
     }
 }

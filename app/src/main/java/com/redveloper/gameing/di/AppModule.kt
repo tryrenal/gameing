@@ -22,7 +22,7 @@ val repository = module {
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
     single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get()) }
-    single<RepositoryCreatorImpl> { RepositoryCreator(get(), get(), get()) }
+    single<RepositoryCreatorImpl> { RepositoryCreator(get(), get(), get(), get()) }
 }
 
 val useCaseModule = module {

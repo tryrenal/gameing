@@ -13,6 +13,8 @@ import com.redveloper.creator.R
 import com.redveloper.creator.core.domain.model.Creator
 import com.redveloper.creator.ui.adapter.CreatorAdapter
 import kotlinx.android.synthetic.main.fragment_creator.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -34,23 +36,34 @@ class CreatorFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
-
-            creatorViewModel.getAllCreator().observe(viewLifecycleOwner, { data ->
-                if (data != null) {
-                    when (data) {
-                        is Resource.Loading -> {
-                        }
-                        is Resource.Success -> {
-                            Timber.i(data.data.toString())
-                            data.data?.let { showingData(it) }
-                        }
-                        is Resource.Error -> {
-                            Timber.e(data.message)
-                        }
-                    }
-                }
-            })
+            getDataCreatorPager()
         }
+    }
+
+    private fun getDataCreatorPager(){
+        lifecycleScope.launch {
+            creatorViewModel.getAllCreatorPager().distinctUntilChanged().collectLatest {
+                showingData(it)
+            }
+        }
+    }
+
+    private fun getDataCreator(){
+//        creatorViewModel.getAllCreator().observe(viewLifecycleOwner, { data ->
+//            if (data != null) {
+//                when (data) {
+//                    is Resource.Loading -> {
+//                    }
+//                    is Resource.Success -> {
+//                        Timber.i(data.data.toString())
+//                        data.data?.let { showingData(it) }
+//                    }
+//                    is Resource.Error -> {
+//                        Timber.e(data.message)
+//                    }
+//                }
+//            }
+//        })
     }
 
     private fun showingData(data: PagingData<Creator>) {

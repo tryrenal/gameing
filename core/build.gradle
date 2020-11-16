@@ -20,9 +20,9 @@ android {
 
 dependencies {
     //room
-    implementation Libraries.room
+    api Libraries.room
     kapt Libraries.roomCompiler
-    implementation Libraries.roomKtx
+    api Libraries.roomKtx
     androidTestImplementation Libraries.roomTesting
     //retrofit
     implementation Libraries.retrofit

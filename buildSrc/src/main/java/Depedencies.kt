@@ -41,7 +41,7 @@ object Versions {
     val loggingInterceptor = "4.9.0"
     val lifecycle = "2.2.0"
     val navigation = "2.3.0"
-    val pagedList = "3.0.0-alpha07"
+    val pagedList = "3.0.0-alpha03"
     val timber = "4.7.1"
     val circleImage = "3.1.0"
 }

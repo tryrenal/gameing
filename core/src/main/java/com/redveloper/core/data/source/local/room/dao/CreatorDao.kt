@@ -11,4 +11,7 @@ abstract class CreatorDao : BaseDao<CreatorEntity> {
 
     @Query("SELECT * FROM creatorentity")
     abstract fun getAllCreator(): PagingSource<Int, CreatorEntity>
+
+    @Query("DELETE FROM creatorentity")
+    abstract suspend fun clearCreatorData()
 }
