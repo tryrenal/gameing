@@ -6,7 +6,6 @@ object Modules {
     val app = ":app"
     val creator = ":features:creator"
     val home = ":features:home"
-    val common = ":common"
     val core = ":core"
 }
 
