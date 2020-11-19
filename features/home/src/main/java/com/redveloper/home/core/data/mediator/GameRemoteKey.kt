@@ -6,7 +6,7 @@ import com.redveloper.core.data.source.local.entity.GameKeys
 import com.redveloper.core.data.source.local.room.AppDatabase
 
 class GameRemoteKey(
-    val appDatabase: AppDatabase
+    private val appDatabase: AppDatabase
 ) {
 
     suspend fun getLastRemoteKey(state: PagingState<Int, GameEntity>) : GameKeys? {

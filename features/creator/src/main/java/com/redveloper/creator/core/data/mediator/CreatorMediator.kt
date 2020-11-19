@@ -1,4 +1,4 @@
-package com.redveloper.creator.core.data
+package com.redveloper.creator.core.data.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -16,9 +16,10 @@ import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
 class CreatorMediator (private val apiService: ApiService, private val appDatabase: AppDatabase): RemoteMediator<Int, CreatorEntity>(){
+    private val creatorRemoteKey  = CreatorRemoteKey(appDatabase)
+
     override suspend fun load(loadType: LoadType, state: PagingState<Int, CreatorEntity>): MediatorResult {
-        val pagedKeyData = getKeyPageData(loadType, state)
-        val page = when(pagedKeyData){
+        val page = when(val pagedKeyData = getKeyPageData(loadType, state)){
             is MediatorResult.Success -> {
                 return pagedKeyData
             }
@@ -56,16 +57,16 @@ class CreatorMediator (private val apiService: ApiService, private val appDataba
     private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, CreatorEntity>) : Any? {
         return when(loadType){
             LoadType.REFRESH -> {
-                val remoteKeys = getClosestRemoteKey(state)
+                val remoteKeys = creatorRemoteKey.getClosestRemoteKey(state)
                 remoteKeys?.nextKey?.minus(1) ?: 1
             }
             LoadType.APPEND -> {
-                val remoteKeys = getLastRemoteKey(state)
+                val remoteKeys = creatorRemoteKey.getLastRemoteKey(state)
                     ?: throw InvalidObjectException("Remote key should not be null for $loadType")
                 remoteKeys.nextKey
             }
             LoadType.PREPEND -> {
-                val remoteKeys = getFirstRemoteKey(state)
+                val remoteKeys = creatorRemoteKey.getFirstRemoteKey(state)
                     ?: throw InvalidObjectException("Invalid state, key should not be null")
                 remoteKeys.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
                 remoteKeys.prevKey
@@ -73,25 +74,4 @@ class CreatorMediator (private val apiService: ApiService, private val appDataba
         }
     }
 
-    private suspend fun getLastRemoteKey(state: PagingState<Int, CreatorEntity>): CreatorKeys? {
-        return state.pages
-            .lastOrNull { it.data.isNotEmpty() }
-            ?.data?.lastOrNull()
-            ?.let { data -> appDatabase.creatorKeysDao().creatorKeysId(data.id) }
-    }
-
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, CreatorEntity>): CreatorKeys? {
-        return state.pages
-            .firstOrNull { it.data.isNotEmpty() }
-            ?.data?.firstOrNull()
-            ?.let { data -> appDatabase.creatorKeysDao().creatorKeysId(data.id) }
-    }
-
-    private suspend fun getClosestRemoteKey(state: PagingState<Int, CreatorEntity>): CreatorKeys? {
-        return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { creatorId ->
-                appDatabase.creatorKeysDao().creatorKeysId(creatorId)
-            }
-        }
-    }
 }

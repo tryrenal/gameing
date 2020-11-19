@@ -1,4 +1,4 @@
-package com.redveloper.creator.core.data
+package com.redveloper.creator.core.data.mediator
 
 import androidx.paging.PagingSource
 import com.redveloper.core.data.source.local.entity.CreatorEntity
