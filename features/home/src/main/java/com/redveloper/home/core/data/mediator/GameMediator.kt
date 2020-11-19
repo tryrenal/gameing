@@ -1,4 +1,4 @@
-package com.redveloper.home.core.data
+package com.redveloper.home.core.data.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -14,7 +14,14 @@ import java.io.IOException
 import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
-class GameMediator (val apiService: ApiService, val appDatabase: AppDatabase) : RemoteMediator<Int, GameEntity>(){
+class GameMediator (
+    private val apiService: ApiService,
+    private val appDatabase: AppDatabase
+) : RemoteMediator<Int, GameEntity>(){
+
+    private val gameRemoteKey =
+        GameRemoteKey(appDatabase)
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, GameEntity>
@@ -28,6 +35,7 @@ class GameMediator (val apiService: ApiService, val appDatabase: AppDatabase) : 
                 pagedKeyData as Int
             }
         }
+
         try {
             val response = apiService.getAllGames(page)
             val isEndOflist = response.results.isEmpty()
@@ -53,44 +61,22 @@ class GameMediator (val apiService: ApiService, val appDatabase: AppDatabase) : 
         }
     }
 
-    suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, GameEntity>) : Any? {
+    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, GameEntity>) : Any? {
         return when(loadType){
             LoadType.REFRESH -> {
-                val remoteKeys = getClosestRemoteKey(state)
+                val remoteKeys = gameRemoteKey.getClosestRemoteKey(state)
                 remoteKeys?.nextKey?.minus(1) ?: 1
             }
             LoadType.APPEND -> {
-                val remoteKeys = getLastRemoteKey(state)
+                val remoteKeys = gameRemoteKey.getLastRemoteKey(state)
                     ?: throw InvalidObjectException("Remote key should not be null for $loadType")
                 remoteKeys.nextKey
             }
             LoadType.PREPEND -> {
-                val remoteKeys = getFirstRemoteKey(state)
+                val remoteKeys = gameRemoteKey.getFirstRemoteKey(state)
                     ?: throw InvalidObjectException("Invalid state, key should not be null")
                 remoteKeys.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
                 remoteKeys.prevKey
-            }
-        }
-    }
-
-    private suspend fun getLastRemoteKey(state: PagingState<Int, GameEntity>) : GameKeys? {
-        return state.pages
-            .lastOrNull { it.data.isNotEmpty() }
-            ?.data?.lastOrNull()
-            ?.let { data -> appDatabase.gameKeysDao().gameKeysById(data.id) }
-    }
-
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, GameEntity>) : GameKeys? {
-        return state.pages
-            .firstOrNull { it.data.isNotEmpty() }
-            ?.data?.firstOrNull()
-            ?.let { data -> appDatabase.gameKeysDao().gameKeysById(data.id) }
-    }
-
-    private suspend fun getClosestRemoteKey(state: PagingState<Int, GameEntity>) : GameKeys? {
-        return state.anchorPosition?.let {position ->
-            state.closestItemToPosition(position)?.id?.let { gameId ->
-                appDatabase.gameKeysDao().gameKeysById(gameId)
             }
         }
     }

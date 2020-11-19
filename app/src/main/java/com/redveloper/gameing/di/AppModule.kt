@@ -9,6 +9,7 @@ import com.redveloper.creator.core.domain.usecase.CreatorInteractor
 import com.redveloper.creator.core.domain.usecase.CreatorUseCase
 import com.redveloper.creator.ui.CreatorViewModel
 import com.redveloper.home.core.data.RepositoryHome
+import com.redveloper.home.core.data.mediator.GameMediator
 import com.redveloper.home.core.domain.repository.RepositoryHomeImpl
 import com.redveloper.home.core.domain.usecase.HomeInteractor
 import com.redveloper.home.core.domain.usecase.HomeUseCase
@@ -21,8 +22,8 @@ val repository = module {
     single { LocalDataSource(get(), get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
-    single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get(), get()) }
-    single<RepositoryCreatorImpl> { RepositoryCreator(get(), get(), get(), get()) }
+    single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get(), get(), get() ) }
+    single<RepositoryCreatorImpl> { RepositoryCreator(get(), get(), get(), get(), get()) }
 }
 
 val useCaseModule = module {

@@ -15,7 +15,7 @@ import java.io.IOException
 import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
-class CreatorMediator (val apiService: ApiService, val appDatabase: AppDatabase): RemoteMediator<Int, CreatorEntity>(){
+class CreatorMediator (private val apiService: ApiService, private val appDatabase: AppDatabase): RemoteMediator<Int, CreatorEntity>(){
     override suspend fun load(loadType: LoadType, state: PagingState<Int, CreatorEntity>): MediatorResult {
         val pagedKeyData = getKeyPageData(loadType, state)
         val page = when(pagedKeyData){
@@ -53,7 +53,7 @@ class CreatorMediator (val apiService: ApiService, val appDatabase: AppDatabase)
         }
     }
 
-    suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, CreatorEntity>) : Any? {
+    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, CreatorEntity>) : Any? {
         return when(loadType){
             LoadType.REFRESH -> {
                 val remoteKeys = getClosestRemoteKey(state)

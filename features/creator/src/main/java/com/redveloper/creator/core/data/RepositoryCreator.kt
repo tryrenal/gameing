@@ -1,10 +1,12 @@
 package com.redveloper.creator.core.data
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.redveloper.core.data.NetworkBoundResource
 import com.redveloper.core.data.source.local.LocalDataSource
+import com.redveloper.core.data.source.local.room.AppDatabase
 import com.redveloper.core.data.source.remote.ApiResponse
 import com.redveloper.core.data.source.remote.RemoteDataSource
 import com.redveloper.core.data.source.remote.network.ApiService
@@ -19,15 +21,18 @@ import kotlinx.coroutines.flow.map
 
 class RepositoryCreator (
     private val apiService: ApiService,
+    private val appDatabase: AppDatabase,
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : RepositoryCreatorImpl  {
 
+    @ExperimentalPagingApi
     override fun getAllCreaorPager(): Flow<PagingData<Creator>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = true),
-            pagingSourceFactory = {CreatorPagingSource(apiService = apiService)}
+            pagingSourceFactory = {CreatorPagingSource(apiService = apiService)},
+            remoteMediator = CreatorMediator(apiService, appDatabase)
         ).flow
             .map { CreatorMapper.entityToDomain(it) }
     }

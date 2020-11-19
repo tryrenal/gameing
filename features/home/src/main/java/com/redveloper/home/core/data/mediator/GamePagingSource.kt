@@ -1,4 +1,4 @@
-package com.redveloper.home.core.data
+package com.redveloper.home.core.data.mediator
 
 import androidx.paging.PagingSource
 import com.redveloper.core.data.source.local.entity.GameEntity
@@ -6,7 +6,7 @@ import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.home.core.utils.GameMapper
 import java.io.IOException
 
-class GamePagingSource (val apiService: ApiService) : PagingSource<Int, GameEntity>(){
+class GamePagingSource (private val apiService: ApiService) : PagingSource<Int, GameEntity>(){
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GameEntity> {
         val page = params.key ?: 1
         return  try {
