@@ -9,6 +9,7 @@ import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.entity.GameKeys
 import com.redveloper.core.data.source.local.room.AppDatabase
+import com.redveloper.core.data.source.remote.RemoteDataSource
 import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.home.core.utils.GameMapper
 import java.io.IOException
@@ -16,7 +17,7 @@ import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
 class GameMediator(
-    private val apiService: ApiService,
+    private val remoteDataSource: RemoteDataSource,
     private val appDatabase: AppDatabase,
     private val localDataSource: LocalDataSource
 ) : RemoteMediator<Int, GameEntity>(){
@@ -38,8 +39,8 @@ class GameMediator(
         }
 
         try {
-            val response = apiService.getAllGames(page)
-            val isEndOflist = response.results.isEmpty()
+            val response = remoteDataSource.getAllGames(page)
+            val isEndOflist = response.isEmpty()
             appDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH){
                     localDataSource.clearGameKeys()
@@ -47,11 +48,11 @@ class GameMediator(
                 }
                 val prevKeys = if (page == 1) null else page - 1
                 val nextKeys = if (isEndOflist) null else page + 1
-                val keys = response.results.map {
+                val keys = response.map {
                     GameKeys(gameId = it.id, prevKey = prevKeys, nextKey = nextKeys)
                 }
                 localDataSource.insertKeyGame(keys)
-                val entity = GameMapper.responseToEntityList(response.results)
+                val entity = GameMapper.responseToEntityList(response)
                 localDataSource.insertGame(entity)
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOflist)

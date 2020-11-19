@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.map
 
 class RepositoryHome(
     private val appDatabase: AppDatabase,
-    private val apiService: ApiService,
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
@@ -31,8 +30,8 @@ class RepositoryHome(
     override fun getAllGamePager(): Flow<PagingData<Game>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = true),
-            pagingSourceFactory = { GamePagingSource(apiService) },
-            remoteMediator = GameMediator(apiService, appDatabase, localDataSource)
+            pagingSourceFactory = { GamePagingSource(remoteDataSource) },
+            remoteMediator = GameMediator(remoteDataSource, appDatabase, localDataSource)
         ).flow
             .map { 
                 GameMapper.entityToDomainPaging(it)

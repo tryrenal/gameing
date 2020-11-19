@@ -10,20 +10,8 @@ import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource(private val apiService: ApiService) {
 
-    fun getAllGames(): Flow<ApiResponse<List<GameResponse>>> {
-        return flow {
-            try {
-                val response = apiService.getAllGames(1)
-                val dataArray = response.results
-                if (dataArray.isNotEmpty()) {
-                    emit(ApiResponse.Success(response.results))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getAllGames(page: Int): List<GameResponse> {
+        return apiService.getAllGames(page).results
     }
 
     fun getDetailGame(id: Int): Flow<ApiResponse<GameResponse>> {
@@ -37,19 +25,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getAllCreator(page: Int): Flow<ApiResponse<List<CreatorResponse>>> {
-        return flow {
-            try {
-                val response = apiService.getAllCreator(page = page)
-                val dataArray = response.results
-                if (dataArray.isNotEmpty()){
-                    emit(ApiResponse.Success(response.results))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            }catch (e: Exception){
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getAllCreator(page: Int): List<CreatorResponse> {
+        return apiService.getAllCreator(page).results
     }
 }
