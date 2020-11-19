@@ -10,12 +10,11 @@ import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.entity.GameKeys
 import com.redveloper.core.data.source.local.room.AppDatabase
 import com.redveloper.core.data.source.remote.RemoteDataSource
-import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.home.core.utils.GameMapper
 import java.io.IOException
 import java.io.InvalidObjectException
 
-@OptIn(ExperimentalPagingApi::class)
+@ExperimentalPagingApi
 class GameMediator(
     private val remoteDataSource: RemoteDataSource,
     private val appDatabase: AppDatabase,
