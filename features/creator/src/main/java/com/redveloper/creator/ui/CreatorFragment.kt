@@ -48,24 +48,6 @@ class CreatorFragment : Fragment() {
         }
     }
 
-    private fun getDataCreator(){
-//        creatorViewModel.getAllCreator().observe(viewLifecycleOwner, { data ->
-//            if (data != null) {
-//                when (data) {
-//                    is Resource.Loading -> {
-//                    }
-//                    is Resource.Success -> {
-//                        Timber.i(data.data.toString())
-//                        data.data?.let { showingData(it) }
-//                    }
-//                    is Resource.Error -> {
-//                        Timber.e(data.message)
-//                    }
-//                }
-//            }
-//        })
-    }
-
     private fun showingData(data: PagingData<Creator>) {
         lifecycleScope.launch {
             creatorAdapter.submitData(data)

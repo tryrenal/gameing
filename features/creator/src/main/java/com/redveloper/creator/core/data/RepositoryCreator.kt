@@ -23,36 +23,6 @@ class RepositoryCreator (
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : RepositoryCreatorImpl  {
-    override fun getAllCreator(): Flow<Resource<PagingData<Creator>>> {
-        return object : NetworkBoundResource<PagingData<Creator>, List<CreatorResponse>>(){
-            override fun loadFromDB(): Flow<PagingData<Creator>> {
-                return Pager(
-                    config = PagingConfig(
-                        pageSize = 20,
-                        enablePlaceholders = true
-                    )
-                ){
-                    localDataSource.getAllCreator()
-                }.flow
-                    .map {
-                        CreatorMapper.entityToDomain(it)
-                    }
-            }
-
-            override fun shouldFetch(data: PagingData<Creator>?): Boolean {
-                return true
-            }
-
-            override suspend fun createCall(): Flow<ApiResponse<List<CreatorResponse>>> {
-                return remoteDataSource.getAllCreator(1)
-            }
-
-            override suspend fun saveCallResult(data: List<CreatorResponse>) {
-                val creatorEntity = CreatorMapper.responseToEntity(data)
-                localDataSource.insertCreator(creatorEntity)
-            }
-        }.asFlow()
-    }
 
     override fun getAllCreaorPager(): Flow<PagingData<Creator>> {
         return Pager(

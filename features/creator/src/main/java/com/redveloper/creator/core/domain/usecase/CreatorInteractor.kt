@@ -9,6 +9,5 @@ import kotlinx.coroutines.flow.Flow
 class CreatorInteractor (
     private val repositoryCreatorImpl: RepositoryCreatorImpl
 ) : CreatorUseCase {
-    override fun getAllCreator(): Flow<Resource<PagingData<Creator>>> = repositoryCreatorImpl.getAllCreator()
     override fun getAllCreatorPager(): Flow<PagingData<Creator>> = repositoryCreatorImpl.getAllCreaorPager()
 }
