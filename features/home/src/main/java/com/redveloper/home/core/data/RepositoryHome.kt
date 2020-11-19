@@ -32,7 +32,7 @@ class RepositoryHome(
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = true),
             pagingSourceFactory = { GamePagingSource(apiService) },
-            remoteMediator = GameMediator(apiService, appDatabase)
+            remoteMediator = GameMediator(apiService, appDatabase, localDataSource)
         ).flow
             .map { 
                 GameMapper.entityToDomainPaging(it)

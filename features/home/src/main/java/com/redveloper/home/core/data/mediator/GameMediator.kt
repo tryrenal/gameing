@@ -5,6 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.entity.GameKeys
 import com.redveloper.core.data.source.local.room.AppDatabase
@@ -14,20 +15,20 @@ import java.io.IOException
 import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
-class GameMediator (
+class GameMediator(
     private val apiService: ApiService,
-    private val appDatabase: AppDatabase
+    private val appDatabase: AppDatabase,
+    private val localDataSource: LocalDataSource
 ) : RemoteMediator<Int, GameEntity>(){
 
     private val gameRemoteKey =
-        GameRemoteKey(appDatabase)
+        GameRemoteKey(localDataSource)
 
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, GameEntity>
     ): MediatorResult {
-        val pagedKeyData = getKeyPageData(loadType, state)
-        val page = when(pagedKeyData){
+        val page = when(val pagedKeyData = getKeyPageData(loadType, state)){
             is MediatorResult.Success -> {
                 return pagedKeyData
             }
@@ -41,17 +42,17 @@ class GameMediator (
             val isEndOflist = response.results.isEmpty()
             appDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH){
-                    appDatabase.gameKeysDao().clearGameKeys()
-                    appDatabase.gameDao().clearDataGame()
+                    localDataSource.clearGameKeys()
+                    localDataSource.clearDataGame()
                 }
                 val prevKeys = if (page == 1) null else page - 1
                 val nextKeys = if (isEndOflist) null else page + 1
                 val keys = response.results.map {
                     GameKeys(gameId = it.id, prevKey = prevKeys, nextKey = nextKeys)
                 }
-                appDatabase.gameKeysDao().insertList(keys)
+                localDataSource.insertKeyGame(keys)
                 val entity = GameMapper.responseToEntityList(response.results)
-                appDatabase.gameDao().insertList(entity)
+                localDataSource.insertGame(entity)
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOflist)
         } catch (e: IOException){

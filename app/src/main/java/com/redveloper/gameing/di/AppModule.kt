@@ -19,7 +19,7 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val repository = module {
-    single { LocalDataSource(get(), get()) }
+    single { LocalDataSource(get(), get(), get(), get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
     single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get(), get(), get() ) }
