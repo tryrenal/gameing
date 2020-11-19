@@ -58,26 +58,6 @@ class HomeFragment : Fragment(), IHomeAdapter {
         }
     }
 
-    private fun getDataGame(){
-        homeViewModel.games().observe(viewLifecycleOwner) { data ->
-            when (data) {
-                is Resource.Loading -> {
-                    progressDialog.setMessage(resources.getString(R.string.loading))
-                    progressDialog.show()
-                }
-                is Resource.Success -> {
-                    progressDialog.dismiss()
-                    Timber.i(data.data.toString())
-                    data.data?.let { showDataGame(it) }
-                }
-                is Resource.Error -> {
-                    progressDialog.dismiss()
-                    Timber.e(data.message)
-                }
-            }
-        }
-    }
-
     private fun getDataGamePager(){
         lifecycleScope.launch {
             homeViewModel.getAllGamesPager().distinctUntilChanged().collectLatest{

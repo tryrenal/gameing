@@ -34,38 +34,6 @@ class RepositoryHome(
             }
     }
 
-    override fun getAllGames(): Flow<Resource<PagingData<Game>>> {
-        return object : NetworkBoundResource<PagingData<Game>, List<GameResponse>>() {
-            override fun loadFromDB(): Flow<PagingData<Game>> {
-                return Pager(
-                    PagingConfig(
-                        pageSize = 20,
-                        enablePlaceholders = true,
-                        maxSize = 200
-                    )
-                ) {
-                    localDataSource.getAllGame()
-                }.flow
-                    .map {
-                        GameMapper.entityToDomainPaging(it)
-                    }
-            }
-
-            override fun shouldFetch(data: PagingData<Game>?): Boolean {
-                return true
-            }
-
-            override suspend fun createCall(): Flow<ApiResponse<List<GameResponse>>> {
-                return remoteDataSource.getAllGames()
-            }
-
-            override suspend fun saveCallResult(data: List<GameResponse>) {
-                val gameEntity = GameMapper.responseToEntityList(data)
-                localDataSource.insertGame(gameEntity)
-            }
-        }.asFlow()
-    }
-
     override fun getGameById(id: Int): Flow<Resource<Game>> {
         return object : NetworkBoundResource<Game, GameResponse>() {
             override fun loadFromDB(): Flow<Game> {

@@ -12,7 +12,6 @@ class HomeViewModel(
 ) : ViewModel() {
     private val calender = Calendar.getInstance()
 
-    fun games() = useCase.getAllGame().asLiveData()
     fun getAllGamesPager() = useCase.getAllGamePager().cachedIn(viewModelScope)
 
     fun setGreeting(): String {
