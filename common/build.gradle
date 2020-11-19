@@ -18,4 +18,6 @@ android {
 }
 
 dependencies {
+    implementation Libraries.glide
+    annotationProcessor Libraries.glideCompiler
 }

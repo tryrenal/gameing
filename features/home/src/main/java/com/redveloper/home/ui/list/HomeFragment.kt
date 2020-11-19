@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,7 @@ import androidx.lifecycle.observe
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Slide
-import androidx.transition.TransitionManager
+import com.example.common.presentation.scrollLeft
 import com.redveloper.core.vo.Resource
 import com.redveloper.home.R
 import com.redveloper.home.core.domain.model.Game
@@ -54,7 +52,7 @@ class HomeFragment : Fragment(), IHomeAdapter {
             getFavoriteGame()
 
             setGreeting()
-            setParallaxRecyclerview()
+            rv_game.scrollLeft(img_ilustration_game, parent)
         }
     }
 
@@ -87,24 +85,6 @@ class HomeFragment : Fragment(), IHomeAdapter {
     @SuppressLint("SetTextI18n")
     private fun setGreeting() {
         greeting.text = "Hello\n${homeViewModel.setGreeting()}"
-    }
-
-    private fun setParallaxRecyclerview() {
-        rv_game.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            @SuppressLint("RtlHardcoded")
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val transition = Slide(Gravity.LEFT)
-                transition.addTarget(img_ilustration_game)
-                TransitionManager.beginDelayedTransition(parent, transition)
-
-                if (dx <= 0) {
-                    img_ilustration_game.visibility = View.VISIBLE
-                } else {
-                    img_ilustration_game.visibility = View.GONE
-                }
-            }
-        })
     }
 
     private fun showDataGame(data: PagingData<Game>) {

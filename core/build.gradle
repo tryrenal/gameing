@@ -19,6 +19,7 @@ android {
 }
 
 dependencies {
+    implementation project(Modules.common)
     //room
     api Libraries.room
     kapt Libraries.roomCompiler

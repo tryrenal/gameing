@@ -22,5 +22,6 @@ dependencies {
 
     implementation project(Modules.creator)
     implementation project(Modules.home)
+    implementation project(Modules.common)
     implementation project(Modules.core)
 }

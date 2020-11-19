@@ -7,6 +7,7 @@ object Modules {
     val creator = ":features:creator"
     val home = ":features:home"
     val core = ":core"
+    val common = ":common"
 }
 
 object Releases {
