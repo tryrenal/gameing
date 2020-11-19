@@ -2,6 +2,7 @@ package com.redveloper.core.data.source.local
 
 import androidx.paging.PagingSource
 import com.redveloper.core.data.source.local.entity.CreatorEntity
+import com.redveloper.core.data.source.local.entity.CreatorKeys
 import com.redveloper.core.data.source.local.entity.GameEntity
 import com.redveloper.core.data.source.local.entity.GameKeys
 import com.redveloper.core.data.source.local.room.dao.CreatorDao
@@ -38,4 +39,7 @@ class LocalDataSource (
     //creator
     fun getAllCreator() : PagingSource<Int, CreatorEntity> = creatorDao.getAllCreator()
     suspend fun insertCreator(data: List<CreatorEntity>) = creatorDao.insertList(data)
+    suspend fun insertKeyCreator(data: List<CreatorKeys>) = creatorKeysDao.insertList(data)
+    suspend fun clearCreatorKeys() = creatorKeysDao.clearCreatorKeys()
+    suspend fun clearDataCreator() = creatorDao.clearCreatorData()
 }

@@ -1,5 +1,6 @@
 package com.redveloper.home.core.data
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -27,6 +28,7 @@ class RepositoryHome(
     private val appExecutors: AppExecutors
 ) : RepositoryHomeImpl {
 
+    @ExperimentalPagingApi
     override fun getAllGamePager(): Flow<PagingData<Game>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = true),

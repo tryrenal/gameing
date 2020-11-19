@@ -6,16 +6,22 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.bumptech.glide.load.HttpException
+import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.local.entity.CreatorEntity
 import com.redveloper.core.data.source.local.entity.CreatorKeys
 import com.redveloper.core.data.source.local.room.AppDatabase
+import com.redveloper.core.data.source.remote.RemoteDataSource
 import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.creator.core.utils.CreatorMapper
 import java.io.IOException
 import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
-class CreatorMediator (private val apiService: ApiService, private val appDatabase: AppDatabase): RemoteMediator<Int, CreatorEntity>(){
+class CreatorMediator (
+    private val remoteDataSource: RemoteDataSource,
+    private val appDatabase: AppDatabase,
+    private val localDataSource: LocalDataSource
+): RemoteMediator<Int, CreatorEntity>(){
     private val creatorRemoteKey  = CreatorRemoteKey(appDatabase)
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, CreatorEntity>): MediatorResult {
@@ -29,21 +35,21 @@ class CreatorMediator (private val apiService: ApiService, private val appDataba
         }
 
         try {
-            val response = apiService.getAllCreator(page)
-            val isEndOfList = response.results.isEmpty()
+            val response = remoteDataSource.getAllCreator(page)
+            val isEndOfList = response.isEmpty()
             appDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH){
-                    appDatabase.creatorKeysDao().clearCreatorKeys()
-                    appDatabase.creatorDao().clearCreatorData()
+                    localDataSource.clearCreatorKeys()
+                    localDataSource.clearDataCreator()
                 }
                 val prevKey = if (page == 1) null  else page - 1
                 val nextKey = if (isEndOfList) null else page + 1
-                val keys = response.results.map { 
+                val keys = response.map {
                     CreatorKeys(creatorId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                appDatabase.creatorKeysDao().insertAll(keys)
-                val entity = CreatorMapper.responseToEntity(response.results)
-                appDatabase.creatorDao().insertList(entity)
+                localDataSource.insertKeyCreator(keys)
+                val entity = CreatorMapper.responseToEntity(response)
+                localDataSource.insertCreator(entity)
             }
 
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)

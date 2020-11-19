@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RepositoryCreator (
-    private val apiService: ApiService,
     private val appDatabase: AppDatabase,
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
@@ -31,12 +30,13 @@ class RepositoryCreator (
             config = PagingConfig(pageSize = 20, enablePlaceholders = true),
             pagingSourceFactory = {
                 CreatorPagingSource(
-                    apiService = apiService
+                    remoteDataSource
                 )
             },
             remoteMediator = CreatorMediator(
-                apiService,
-                appDatabase
+                remoteDataSource,
+                appDatabase,
+                localDataSource
             )
         ).flow
             .map { CreatorMapper.entityToDomain(it) }
