@@ -25,6 +25,8 @@ import com.redveloper.home.ui.list.adapter.HomeAdapter
 import com.redveloper.home.ui.list.adapter.IHomeAdapter
 import com.redveloper.home.utils.idGame
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -48,7 +50,7 @@ class HomeFragment : Fragment(), IHomeAdapter {
         if (activity != null) {
             progressDialog = ProgressDialog(requireContext())
 
-            getDataGame()
+            getDataGamePager()
             getFavoriteGame()
 
             setGreeting()
@@ -72,6 +74,14 @@ class HomeFragment : Fragment(), IHomeAdapter {
                     progressDialog.dismiss()
                     Timber.e(data.message)
                 }
+            }
+        }
+    }
+
+    private fun getDataGamePager(){
+        lifecycleScope.launch {
+            homeViewModel.getAllGamesPager().distinctUntilChanged().collectLatest{
+                showDataGame(it)
             }
         }
     }

@@ -2,6 +2,8 @@ package com.redveloper.home.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.redveloper.home.core.domain.usecase.HomeUseCase
 import java.util.*
 
@@ -11,6 +13,8 @@ class HomeViewModel(
     private val calender = Calendar.getInstance()
 
     fun games() = useCase.getAllGame().asLiveData()
+    fun getAllGamesPager() = useCase.getAllGamePager().cachedIn(viewModelScope)
+
     fun setGreeting(): String {
         return when (calender.get(Calendar.HOUR_OF_DAY)) {
             in 0..11 -> "Good Morning"

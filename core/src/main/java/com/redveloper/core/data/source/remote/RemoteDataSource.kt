@@ -13,7 +13,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     fun getAllGames(): Flow<ApiResponse<List<GameResponse>>> {
         return flow {
             try {
-                val response = apiService.getAllGames()
+                val response = apiService.getAllGames(1)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))

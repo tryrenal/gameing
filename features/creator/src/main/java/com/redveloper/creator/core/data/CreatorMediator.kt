@@ -32,17 +32,17 @@ class CreatorMediator (val apiService: ApiService, val appDatabase: AppDatabase)
             val isEndOfList = response.results.isEmpty()
             appDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH){
-                    appDatabase.CreatorKeysDao().clearCreatorKeys()
-                    appDatabase.CreatorDao().clearCreatorData()
+                    appDatabase.creatorKeysDao().clearCreatorKeys()
+                    appDatabase.creatorDao().clearCreatorData()
                 }
                 val prevKey = if (page == 1) null  else page - 1
                 val nextKey = if (isEndOfList) null else page + 1
                 val keys = response.results.map { 
-                    CreatorKeys(gameId = it.id, prevKey = prevKey, nextKey = nextKey)
+                    CreatorKeys(creatorId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                appDatabase.CreatorKeysDao().insertAll(keys)
+                appDatabase.creatorKeysDao().insertAll(keys)
                 val entity = CreatorMapper.responseToEntity(response.results)
-                appDatabase.CreatorDao().insertList(entity)
+                appDatabase.creatorDao().insertList(entity)
             }
 
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
@@ -77,20 +77,20 @@ class CreatorMediator (val apiService: ApiService, val appDatabase: AppDatabase)
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
-            ?.let { data -> appDatabase.CreatorKeysDao().gameKeysById(data.id) }
+            ?.let { data -> appDatabase.creatorKeysDao().creatorKeysId(data.id) }
     }
 
     private suspend fun getFirstRemoteKey(state: PagingState<Int, CreatorEntity>): CreatorKeys? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
-            ?.let { data -> appDatabase.CreatorKeysDao().gameKeysById(data.id) }
+            ?.let { data -> appDatabase.creatorKeysDao().creatorKeysId(data.id) }
     }
 
     private suspend fun getClosestRemoteKey(state: PagingState<Int, CreatorEntity>): CreatorKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { gameId ->
-                appDatabase.CreatorKeysDao().gameKeysById(gameId)
+            state.closestItemToPosition(position)?.id?.let { creatorId ->
+                appDatabase.creatorKeysDao().creatorKeysId(creatorId)
             }
         }
     }

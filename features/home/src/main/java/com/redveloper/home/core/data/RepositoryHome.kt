@@ -7,6 +7,7 @@ import com.redveloper.core.data.NetworkBoundResource
 import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.remote.ApiResponse
 import com.redveloper.core.data.source.remote.RemoteDataSource
+import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.core.data.source.remote.response.game.GameResponse
 import com.redveloper.core.utils.AppExecutors
 import com.redveloper.core.vo.Resource
@@ -17,10 +18,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RepositoryHome(
+    private val apiService: ApiService,
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : RepositoryHomeImpl {
+
+    override fun getAllGamePager(): Flow<PagingData<Game>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = true),
+            pagingSourceFactory = {GamePagingSource(apiService = apiService)}
+        ).flow
+            .map { 
+                GameMapper.entityToDomainPaging(it)
+            }
+    }
 
     override fun getAllGames(): Flow<Resource<PagingData<Game>>> {
         return object : NetworkBoundResource<PagingData<Game>, List<GameResponse>>() {

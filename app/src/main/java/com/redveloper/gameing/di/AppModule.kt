@@ -21,7 +21,7 @@ val repository = module {
     single { LocalDataSource(get(), get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
-    single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get()) }
+    single<RepositoryHomeImpl> { RepositoryHome(get(), get(), get(), get()) }
     single<RepositoryCreatorImpl> { RepositoryCreator(get(), get(), get(), get()) }
 }
 

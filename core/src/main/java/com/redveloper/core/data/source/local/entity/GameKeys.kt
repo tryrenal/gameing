@@ -4,4 +4,4 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class CreatorKeys(@PrimaryKey val creatorId: Int, val prevKey: Int?, val nextKey: Int?)
+data class GameKeys(@PrimaryKey val gameId: Int, val prevKey: Int?, val nextKey: Int?)

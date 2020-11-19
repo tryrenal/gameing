@@ -32,8 +32,10 @@ val networkModule = module {
 }
 
 val databaseModule = module {
-    factory { get<AppDatabase>().GameDao() }
-    factory { get<AppDatabase>().CreatorDao() }
+    factory { get<AppDatabase>().gameDao() }
+    factory { get<AppDatabase>().gameKeysDao() }
+    factory { get<AppDatabase>().creatorDao() }
+    factory { get<AppDatabase>().creatorKeysDao() }
     single {
         Room.databaseBuilder(
             androidContext(),

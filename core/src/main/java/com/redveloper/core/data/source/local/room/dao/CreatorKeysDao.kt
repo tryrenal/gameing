@@ -7,13 +7,13 @@ import androidx.room.Query
 import com.redveloper.core.data.source.local.entity.CreatorKeys
 
 @Dao
-interface CreatorKeysDao{
+abstract class CreatorKeysDao : BaseDao<CreatorKeys>{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(creatorKeys: List<CreatorKeys>)
+    abstract suspend fun insertAll(creatorKeys: List<CreatorKeys>)
 
-    @Query("SELECT * FROM CreatorKeys WHERE gameId = :id")
-    suspend fun gameKeysById(id: Int): CreatorKeys?
+    @Query("SELECT * FROM CreatorKeys WHERE creatorId = :id")
+    abstract suspend fun creatorKeysId(id: Int): CreatorKeys?
 
     @Query("DELETE FROM creatorkeys")
-    suspend fun clearCreatorKeys()
+    abstract suspend fun clearCreatorKeys()
 }

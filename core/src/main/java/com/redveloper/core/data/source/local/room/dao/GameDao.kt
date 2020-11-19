@@ -17,4 +17,7 @@ abstract class GameDao : BaseDao<GameEntity> {
 
     @Query("SELECT * FROM gameentity WHERE isFavorit = 1")
     abstract fun getFavoriteGame() : PagingSource<Int, GameEntity>
+
+    @Query("DELETE FROM gameentity")
+    abstract suspend fun clearDataGame()
 }
