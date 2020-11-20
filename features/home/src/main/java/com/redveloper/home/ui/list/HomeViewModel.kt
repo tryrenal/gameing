@@ -12,7 +12,7 @@ class HomeViewModel(
 ) : ViewModel() {
     private val calender = Calendar.getInstance()
 
-    fun getAllGamesPager() = useCase.getAllGamePager().cachedIn(viewModelScope)
+    fun getAllGamesPager(search: String? = null) = useCase.getAllGamePager(search).cachedIn(viewModelScope)
 
     fun setGreeting(): String {
         return when (calender.get(Calendar.HOUR_OF_DAY)) {

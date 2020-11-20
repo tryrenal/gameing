@@ -11,7 +11,8 @@ interface ApiService {
 
     @GET("games")
     suspend fun getAllGames(
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("search") search: String?
     ): RootGameResponse
 
     @GET("games/{id}")

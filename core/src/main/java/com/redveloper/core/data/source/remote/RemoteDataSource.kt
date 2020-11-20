@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource(private val apiService: ApiService) {
 
-    suspend fun getAllGames(page: Int): List<GameResponse> {
-        return apiService.getAllGames(page).results
+    suspend fun getAllGames(page: Int, search: String?): List<GameResponse> {
+        return apiService.getAllGames(page, search).results
     }
 
     fun getDetailGame(id: Int): Flow<ApiResponse<GameResponse>> {

@@ -18,7 +18,8 @@ import java.io.InvalidObjectException
 class GameMediator(
     private val remoteDataSource: RemoteDataSource,
     private val appDatabase: AppDatabase,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val search: String?
 ) : RemoteMediator<Int, GameEntity>(){
 
     private val gameRemoteKey =
@@ -38,7 +39,7 @@ class GameMediator(
         }
 
         try {
-            val response = remoteDataSource.getAllGames(page)
+            val response = remoteDataSource.getAllGames(page, search)
             val isEndOflist = response.isEmpty()
             appDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH){

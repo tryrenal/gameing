@@ -6,7 +6,7 @@ import com.redveloper.home.core.domain.model.Game
 import kotlinx.coroutines.flow.Flow
 
 interface HomeUseCase {
-    fun getAllGamePager() : Flow<PagingData<Game>>
+    fun getAllGamePager(search: String?) : Flow<PagingData<Game>>
     fun getGameById(id: Int): Flow<Resource<Game>>
     fun setFavoriteGame(data: Game, state: Boolean)
     fun getFavoriteGame() : Flow<PagingData<Game>>

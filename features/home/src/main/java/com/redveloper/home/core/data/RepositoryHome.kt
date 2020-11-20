@@ -9,7 +9,6 @@ import com.redveloper.core.data.source.local.LocalDataSource
 import com.redveloper.core.data.source.local.room.AppDatabase
 import com.redveloper.core.data.source.remote.ApiResponse
 import com.redveloper.core.data.source.remote.RemoteDataSource
-import com.redveloper.core.data.source.remote.network.ApiService
 import com.redveloper.core.data.source.remote.response.game.GameResponse
 import com.redveloper.core.utils.AppExecutors
 import com.redveloper.core.vo.Resource
@@ -29,11 +28,11 @@ class RepositoryHome(
 ) : RepositoryHomeImpl {
 
     @ExperimentalPagingApi
-    override fun getAllGamePager(): Flow<PagingData<Game>> {
+    override fun getAllGamePager(search: String?): Flow<PagingData<Game>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = true),
-            pagingSourceFactory = { GamePagingSource(remoteDataSource) },
-            remoteMediator = GameMediator(remoteDataSource, appDatabase, localDataSource)
+            pagingSourceFactory = { GamePagingSource(remoteDataSource, search) },
+            remoteMediator = GameMediator(remoteDataSource, appDatabase, localDataSource, search)
         ).flow
             .map { 
                 GameMapper.entityToDomainPaging(it)

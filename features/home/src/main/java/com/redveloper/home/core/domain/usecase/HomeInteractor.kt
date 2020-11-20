@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 class HomeInteractor(
     private val repositoryHomeImpl: RepositoryHomeImpl
 ) : HomeUseCase {
-    override fun getAllGamePager(): Flow<PagingData<Game>> = repositoryHomeImpl.getAllGamePager()
+    override fun getAllGamePager(search: String?): Flow<PagingData<Game>> = repositoryHomeImpl.getAllGamePager(search)
     override fun getGameById(id: Int): Flow<Resource<Game>> = repositoryHomeImpl.getGameById(id)
     override fun setFavoriteGame(data: Game, state: Boolean) = repositoryHomeImpl.setFavoriteGame(data, state)
     override fun getFavoriteGame(): Flow<PagingData<Game>> = repositoryHomeImpl.getFavoriteGame()
