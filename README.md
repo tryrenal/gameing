@@ -5,6 +5,8 @@ Gameing adalah aplikasi yang menampilkan daftar game dan daftar creator.
 # Features
   - Pengguna dapat melihat daftar Game
   - Pengguna dapat melihat detail Game
+  - Pengguna dapat mencari Game berdasarkan kata kunci
+  - Pengguna dapat menyimpan Game favorit
   - Pengguna dapat melihat daftar Creator
 
 > Dalam aplikasi Gameing menggunakan modularization dengan konsep seperti pada gambar di bawah.
