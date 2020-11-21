@@ -35,4 +35,5 @@ License
 Terima kasih, dan kalau ada yang perlu di diskusikan comment ya.
 # Social Media
 | [LinkedIn](https://www.linkedin.com/in/renalsa18/) | [Youtube](https://www.youtube.com/channel/UCU9kq_235U9rEYT6v6DE_tQ?view_as=subscriber)
+
 Renaldy Sabdo
