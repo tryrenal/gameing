@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -23,13 +24,17 @@ import com.redveloper.home.ui.list.adapter.HomeAdapter
 import com.redveloper.home.ui.list.adapter.IHomeAdapter
 import com.redveloper.home.utils.idGame
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class HomeFragment : Fragment(), IHomeAdapter {
+@ExperimentalCoroutinesApi
+@FlowPreview
+class HomeFragment : Fragment(), IHomeAdapter{
 
     val homeViewModel: HomeViewModel by viewModel()
     private lateinit var progressDialog: ProgressDialog
@@ -42,6 +47,7 @@ class HomeFragment : Fragment(), IHomeAdapter {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
@@ -49,15 +55,28 @@ class HomeFragment : Fragment(), IHomeAdapter {
 
             getDataGamePager()
             getFavoriteGame()
-
+            searchGame()
             setGreeting()
             rv_game.scrollLeft(img_ilustration_game, parent)
         }
     }
 
+    private fun searchGame(){
+       search_game.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+           override fun onQueryTextSubmit(query: String?): Boolean {
+               return true
+           }
+
+           override fun onQueryTextChange(newText: String?): Boolean {
+               homeViewModel.query.value = newText
+               return true
+           }
+       })
+    }
+
     private fun getDataGamePager(){
         lifecycleScope.launch {
-            homeViewModel.getAllGamesPager().distinctUntilChanged().collectLatest{
+            homeViewModel.game.distinctUntilChanged().collectLatest {
                 showDataGame(it)
             }
         }
